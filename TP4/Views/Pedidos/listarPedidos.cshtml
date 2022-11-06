@@ -1,0 +1,72 @@
+@model List<TP4.ViewModels.PedidoViewModel>
+
+<section>
+    <h1 class="text-center">Listado de pedidos de todos los cadetes</h1>
+    <article class="text-center">
+        <p>Pedidos encontrados:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Número
+                        </th>
+                        <th>
+                            ID del cliente
+                        </th>
+                        <th>
+                            ID del cadete
+                        </th>
+                        <th>
+                            Observaciones
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                        <th>
+                            Borrado
+                        </th>
+                        <th>
+                            Modificación
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pedido in Model)
+                    {
+                        <tr>
+                            <td>
+                                @pedido.Numero
+                            </td>
+                            <td>
+                                @pedido.IdCliente
+                            </td>
+                            <td>
+                                @pedido.IdCadete
+                            </td>
+                            @if(pedido.Observaciones!=null){
+                                <td>@pedido.Observaciones</td>
+                            } else {
+                                <td>-</td>
+                            }
+                            @if(pedido.EstaRealizado){
+                                <td>Entregado</td>
+                            } else {
+                                <td>Pendiente</td>
+                            }
+                            <td>
+                                @Html.ActionLink("Eliminar","eliminarPedido","Pedidos", new {numPedido = pedido.Numero})
+                            </td>
+                            <td>
+                                @Html.ActionLink("Modificar","modificarPedido","Pedidos", new {numPedido = pedido.Numero})
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </article>
+    <article>
+        <p class="extrasListarPedidos">Para registrar un nuevo pedido, <a asp-area="" asp-controller="Pedidos" asp-action="crearPedido">haga click aquí</a> (NOTA: deben haber cadetes cargados.).</p>
+    </article>
+</section>
+
+

@@ -9,7 +9,7 @@ namespace TP4.Models
     public class RepositorioCadetes
     {
         private static int autonumerico = 0;
-        private List<Cadete> cadetes = new List<Cadete>();
+        private static List<Cadete> cadetes = new List<Cadete>();
         public List<Cadete> getCadetes(){
 
             /*  Para trabajar con DB
@@ -28,7 +28,7 @@ namespace TP4.Models
 
         public void addCadete(Cadete cadete){
             asignarID(cadete);
-            this.cadetes.Add(cadete);
+            cadetes.Add(cadete);
         }
 
         public void eliminarCadete(int idCadete){

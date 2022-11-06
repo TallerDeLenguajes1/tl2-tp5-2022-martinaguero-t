@@ -1,0 +1,45 @@
+@model TP4.ViewModels.PedidoViewModel
+@{ RepositorioCadetes infoCadetes = new RepositorioCadetes();}
+
+<section>
+    <h1 class="text-center">Modificar información del pedido:</h1>
+    <article>
+        <form asp-controller="Pedidos" asp-action="modificarPedidoPost" method="post">
+
+            <label asp-for="@Model.IdCliente"> @Html.DisplayNameFor(Model => Model.IdCliente)
+                <input asp-for="@Model.IdCliente" value="@Model.IdCliente">
+            </label>
+            <span class="form-control" asp-validation-for="@Model.IdCliente" ></span>
+
+            <label asp-for="@Model.IdCadete"> @Html.DisplayNameFor(Model => Model.IdCadete)
+            <select asp-for="@Model.IdCadete">
+                @foreach (var cadete in infoCadetes.getCadetes())
+                    @if(cadete.ID == @Model.IdCadete){
+                        <option value="@cadete.ID" selected>@cadete.Nombre</option>
+                    } else { 
+                        <option value="@cadete.ID">@cadete.Nombre</option>
+                    }
+                }
+            </select>
+            </label>
+            <span class="form-control" asp-validation-for="@Model.IdCadete" ></span>
+
+            <label asp-for="@Model.Observaciones"> @Html.DisplayNameFor(Model => Model.Observaciones)
+                <input asp-for="@Model.Observaciones" value="@Model.Observaciones">
+            </label>
+            <span class="form-control" asp-validation-for="@Model.Observaciones" ></span>
+
+            <label asp-for="@Model.EstaRealizado"> ¿Pedido realizado?
+                <input asp-for="@Model.EstaRealizado">
+            </label>
+            <span class="form-control" asp-validation-for="@Model.EstaRealizado" ></span>
+
+            @Html.HiddenFor(model => model.Numero)
+            <input type="submit" value="Cargar">
+        </form>
+    </article>
+</section>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> } 
+
+

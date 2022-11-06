@@ -24,9 +24,15 @@ namespace TP4.Controllers
             return View(pedidosViewModel);
         }
 
+
         [HttpGet]   
-        public IActionResult crearPedido(){
-            return View(new PedidoViewModel());
+        public IActionResult crearPedido(){ 
+            RepositorioCadetes infoCadetes = new RepositorioCadetes();
+            if(infoCadetes.getCadetes().Any()){
+                return View(new PedidoViewModel());
+            } else {
+                return RedirectToAction("listarPedidos");
+            }
         }   
 
         [HttpPost]
@@ -43,8 +49,8 @@ namespace TP4.Controllers
         }
 
         [HttpGet]
-        public IActionResult eliminarCadete(int numPedido){
-            repPedidos.eliminarPedido(numPedido)
+        public IActionResult eliminarPedido(int numPedido){
+            repPedidos.eliminarPedido(numPedido);
             return RedirectToAction("listarPedidos");
         }
 

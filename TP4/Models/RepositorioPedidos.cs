@@ -32,6 +32,7 @@ namespace TP4.Models
                 pedidoBuscado.Observaciones = pedidoAModificar.Observaciones;
                 pedidoBuscado.EstaRealizado = pedidoAModificar.EstaRealizado;
                 pedidoBuscado.IdCadete = pedidoAModificar.IdCadete;
+                pedidoBuscado.IdCliente = pedidoAModificar.IdCliente;
             }
     
         }   
