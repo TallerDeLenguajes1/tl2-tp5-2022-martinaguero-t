@@ -1,0 +1,85 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+table {
+  margin: 0 auto;
+  border: 0.05em solid black;
+  border-collapse : collapse;
+  width : 60%;
+}
+
+table th {
+  background-color: rgba(159, 242, 214, 0.824);
+}
+
+table th, table td {
+  padding: 0.5em;
+  border: 0.05em solid black;
+}
+
+p {
+  margin-top : 1em;
+}
+
+.extrasAgregarCadete {
+  background-color :rgba(159, 242, 214, 0.824);
+  padding: 0.4em;
+  margin: 1em auto;
+  text-align:center;
+  width:50%;
+}
+
+.extrasAgregarCadete a{
+  color:teal;
+}
+
+form {
+  background-color:azure;
+  padding:1em;
+  border-radius:0.5em;
+  border: 0.01em solid teal;
+  margin: 1em auto;
+  width:60%;
+}
+
+form label {
+  width: 100%;
+  display:block;
+  padding:0.2em;
+}
+
+form label input {
+  display:block;
+  width:100%;
+}
+
+form input[type="submit"] {
+  margin-top:1em;
+  
+}
+
+form input[type="submit"]:hover {
+  background-color:rgb(142, 163, 202);
+}
+
+.form-control {
+  background-color: azure !important;
+  border: none !important;
+  color:teal;
+}

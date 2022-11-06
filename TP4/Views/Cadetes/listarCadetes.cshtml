@@ -1,0 +1,63 @@
+@model TP4.ViewModels.ListaCadeteViewModel
+
+<section>
+    <h1 class="text-center">Listado de cadetes</h1>
+    <article class="text-center">
+        <p>A continuacion se listan los cadetes:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Direccion
+                        </th>
+                        <th>
+                            Teléfono
+                        </th>
+                        <th>
+                            Borrado
+                        </th>
+                        <th>
+                            Modificación
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cadete in Model.listaCadetesViewModel)
+                    {
+                        <tr>
+                            <td>
+                                @cadete.ID
+                            </td>
+                            <td>
+                                @cadete.Nombre
+                            </td>
+                            <td>
+                                @cadete.Direccion
+                            </td>
+                            <td>
+                                @cadete.Telefono
+                            </td>
+                            <td>
+                                @Html.ActionLink("Eliminar","eliminarCadete","Cadetes", new {id = cadete.ID})
+                            </td>
+                            <td>
+                                @Html.ActionLink("Modificar","modificarCadete","Cadetes", new {id = cadete.ID})
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </article>
+    <article>
+        <p class="extrasAgregarCadete">Si desea agregar la información de un cadete, <a asp-area="" asp-controller="Cadetes" asp-action="cargarCadete">haga click aquí.</a></p>
+        <p class="extrasAgregarCadete"> Cantidad de cadetes registrados: @Model.contarCadetes()</p>
+    </article>
+</section>
+
+

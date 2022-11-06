@@ -1,0 +1,30 @@
+@model TP4.ViewModels.CadeteViewModel
+
+<section>
+    <h1 class="text-center">Cargar cadete</h1>
+    <article>
+        <form asp-controller="Cadetes" asp-action="cargarCadetePost" method="post">
+
+            <label asp-for="@Model.Nombre"> @Html.DisplayNameFor(Model => Model.Nombre)
+                <input asp-for="@Model.Nombre" type="text">
+            </label>
+            <span class="form-control" asp-validation-for="@Model.Nombre" ></span>
+
+            <label for="direccion"> @Html.DisplayNameFor(Model => Model.Direccion) 
+                <input name="direccion" type="text" value="@Model.Direccion">
+            </label>
+            <span class="form-control" asp-validation-for="@Model.Direccion" ></span>
+
+            <label for="telefono"> @Html.DisplayNameFor(Model => Model.Telefono)
+                <input name="telefono" type="text" value="@Model.Telefono">
+            </label>    
+            <span class="form-control" asp-validation-for="@Model.Telefono" ></span> 
+
+            <input type="submit" value="Cargar">
+        </form>
+    </article>
+</section>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> } 
+
+
