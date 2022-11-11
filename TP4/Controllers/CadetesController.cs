@@ -20,14 +20,23 @@ public class CadetesController : Controller
     }
     
     public IActionResult listarCadetes(){
-        // método que traiga cadetes
-        var cadetes = repCadetes.getCadetes();
-        // mapear
-        var cadetesViewModel = _mapper.Map<List<CadeteViewModel>>(cadetes);
-        ListaCadeteViewModel listaCadetesViewModel = new ListaCadeteViewModel(cadetesViewModel);
 
-        // tener la clase con la lista y los métodos
-        return View(listaCadetesViewModel);
+        try
+        {
+            // método que traiga cadetes
+            var cadetes = repCadetes.getCadetes();
+            // mapear
+            var cadetesViewModel = _mapper.Map<List<CadeteViewModel>>(cadetes);
+            ListaCadeteViewModel listaCadetesViewModel = new ListaCadeteViewModel(cadetesViewModel);
+
+            // tener la clase con la lista y los métodos
+            return View(listaCadetesViewModel);
+        }
+        catch (System.Exception)
+        {
+            // Modificar listaCadetesViewModel para que tenga un atributo que corresponda al error?
+            return View();
+        }
     }
     
     [HttpGet]   
@@ -38,13 +47,21 @@ public class CadetesController : Controller
     [HttpPost]
     public IActionResult cargarCadetePost(CadeteViewModel cadeteViewModel){
 
-        if(ModelState.IsValid){
-            var cadete = _mapper.Map<Cadete>(cadeteViewModel);
-            repCadetes.addCadete(cadete);
-            return RedirectToAction("listarCadetes");
-        } 
+        try{
 
-        return View("cargarCadete",cadeteViewModel);
+            if(ModelState.IsValid){
+                var cadete = _mapper.Map<Cadete>(cadeteViewModel);
+                repCadetes.addCadete(cadete);
+                return RedirectToAction("listarCadetes");
+            } 
+
+            return View("cargarCadete",cadeteViewModel);
+        }
+        catch 
+        {
+            // ¿Qué hacer?
+            return View("listarCadetes");
+        }
 
     }
 
@@ -76,8 +93,17 @@ public class CadetesController : Controller
 
     [HttpGet]
     public IActionResult eliminarCadete(int ID){
-        repCadetes.eliminarCadete(ID);
-        return RedirectToAction("listarCadetes");
+
+        try
+        {
+            repCadetes.eliminarCadete(ID);
+            return RedirectToAction("listarCadetes");
+        }
+        catch (System.Exception)
+        {
+            // Qué hacer acá?
+            return RedirectToAction("listarCadetes");
+        }
     }
     
 
