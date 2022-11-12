@@ -1,14 +1,14 @@
-@model TP4.ViewModels.ListaCadeteViewModel
+@model TP4.ViewModels.ListaClienteViewModel
 
 <section>
-    <h1 class="text-center">Listado de cadetes</h1>
+    <h1 class="text-center">Listado de clientes</h1>
 
     @if (ViewBag.Error != null)
     {
         <article class="text-center excepcionDB">@ViewBag.Error</article>
     } else {
         <article class="text-center">
-            <p>A continuacion se listan los cadetes:</p>
+            <p>A continuacion se listan los clientes:</p>
                 <table>
                     <thead>
                         <tr>
@@ -25,6 +25,9 @@
                                 Teléfono
                             </th>
                             <th>
+                                Referencia dirección
+                            </th>
+                            <th>
                                 Borrado
                             </th>
                             <th>
@@ -33,26 +36,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var cadete in Model.listaCadetesViewModel)
+                        @foreach (var cliente in Model.listaClientesViewModel)
                         {
                             <tr>
                                 <td>
-                                    @cadete.ID
+                                    @cliente.ID
                                 </td>
                                 <td>
-                                    @cadete.Nombre
+                                    @cliente.Nombre
                                 </td>
                                 <td>
-                                    @cadete.Direccion
+                                    @cliente.Direccion
                                 </td>
                                 <td>
-                                    @cadete.Telefono
+                                    @cliente.Telefono
+                                </td>
+                                @if(cliente.DatosReferenciaDireccion != null){
+                                    <td>
+                                        @cliente.DatosReferenciaDireccion
+                                    </td>
+                                } else {
+                                    <td>
+                                        -
+                                    </td>
+                                }
+                                <td>
+                                    @Html.ActionLink("Eliminar","eliminarCliente","Clientes", new {id = cliente.ID})
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Eliminar","eliminarCadete","Cadetes", new {id = cadete.ID})
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Modificar","modificarCadete","Cadetes", new {id = cadete.ID})
+                                    @Html.ActionLink("Modificar","modificarCliente","Cliente", new {id = cliente.ID})
                                 </td>
                             </tr>
                         }
@@ -60,8 +72,8 @@
                 </table>
         </article>
         <article>
-            <p class="extrasListarCadetes">Si desea agregar la información de un cadete, <a asp-area="" asp-controller="Cadetes" asp-action="cargarCadete">haga click aquí.</a></p>
-            <p class="extrasListarCadetes"> Cantidad de cadetes registrados: @Model.contarCadetes()</p>
+            <p class="extrasListarClientes">Si desea agregar la información de un cliente, <a asp-area="" asp-controller="Clientes" asp-action="cargarCliente">haga click aquí.</a></p>
+            <p class="extrasListarClientes"> Cantidad de clientes registrados: @Model.contarCadetes()</p>
         </article>
     }
 </section>

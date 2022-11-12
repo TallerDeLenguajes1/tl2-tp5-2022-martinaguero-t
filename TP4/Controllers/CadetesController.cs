@@ -9,14 +9,13 @@ namespace TP4.Controllers;
 public class CadetesController : Controller
 {
     private readonly ILogger<CadetesController> _logger;
-
     private IMapper _mapper;
-
-    private static RepositorioCadetes repCadetes = new RepositorioCadetes();
-    public CadetesController(ILogger<CadetesController> logger, IMapper mapper)
+    private readonly IRepositorioCadetes _repCadetes;
+    public CadetesController(ILogger<CadetesController> logger, IMapper mapper, IRepositorioCadetes repCadetes)
     {
         _logger = logger;
         _mapper = mapper;
+        _repCadetes = repCadetes;
     }
     
     public IActionResult listarCadetes(){
@@ -24,7 +23,8 @@ public class CadetesController : Controller
         try
         {
             // método que traiga cadetes
-            var cadetes = repCadetes.getCadetes();
+            var cadetes = _repCadetes.obtenerCadetes();
+
             // mapear
             var cadetesViewModel = _mapper.Map<List<CadeteViewModel>>(cadetes);
             ListaCadeteViewModel listaCadetesViewModel = new ListaCadeteViewModel(cadetesViewModel);
@@ -32,10 +32,11 @@ public class CadetesController : Controller
             // tener la clase con la lista y los métodos
             return View(listaCadetesViewModel);
         }
-        catch (System.Exception)
+        catch (System.Exception ex)
         {
             // Modificar listaCadetesViewModel para que tenga un atributo que corresponda al error?
-            return View();
+            ViewBag.Error = ex.Message; 
+            return View(new ListaCadeteViewModel(new List<CadeteViewModel>()));
         }
     }
     
@@ -51,29 +52,40 @@ public class CadetesController : Controller
 
             if(ModelState.IsValid){
                 var cadete = _mapper.Map<Cadete>(cadeteViewModel);
-                repCadetes.addCadete(cadete);
+                _repCadetes.agregarCadete(cadete);
                 return RedirectToAction("listarCadetes");
             } 
 
             return View("cargarCadete",cadeteViewModel);
         }
         catch 
-        {
-            // ¿Qué hacer?
-            return View("listarCadetes");
+        {   
+            // En caso de no poder cargar un cadete redirigo al listado de cadetes.
+            return RedirectToAction("listarCadetes");
         }
 
     }
 
     public IActionResult modificarCadete(int id){
         
-        var cadetes = repCadetes.getCadetes();
-        Cadete? cadeteBuscado = cadetes.Find(cadete => cadete.ID == id);
+        try
+        {
+            
+            var cadetes = _repCadetes.obtenerCadetes();
+            Cadete? cadeteBuscado = cadetes.Find(cadete => cadete.ID == id);
 
-        if(cadeteBuscado != null){
-            var cadeteViewModel = _mapper.Map<CadeteViewModel>(cadeteBuscado);
-            return View(cadeteViewModel);
-        } else {
+            if(cadeteBuscado != null){
+                var cadeteViewModel = _mapper.Map<CadeteViewModel>(cadeteBuscado);
+                return View(cadeteViewModel);
+            } else {
+                return RedirectToAction("listarCadetes");
+                // No se encontró el cadete buscado
+            }
+
+        }
+        catch (System.Exception)
+        {
+            // Hubo un error al conectar con la base de datos/ obtener cadetes. Redirijo al listado.
             return RedirectToAction("listarCadetes");
         }
     }
@@ -81,13 +93,24 @@ public class CadetesController : Controller
     [HttpPost]
     public IActionResult modificarCadetePost(CadeteViewModel cadeteViewModel){
 
-        if(ModelState.IsValid){
-            var cadete = _mapper.Map<Cadete>(cadeteViewModel);
-            repCadetes.modificarCadete(cadete);
+        try
+        {
+            
+            if(ModelState.IsValid){
+                var cadete = _mapper.Map<Cadete>(cadeteViewModel);
+                _repCadetes.modificarCadete(cadete);
+                return RedirectToAction("listarCadetes");
+            } 
+            
+            return View("modificarCadete",cadeteViewModel);
+            // El estado del modelo recibido no es válido, redirige al formulario
+
+        }
+        catch (System.Exception)
+        {
+            // Hubo un error y no se pudo modificar la información del cadete.
             return RedirectToAction("listarCadetes");
-        } 
-        
-        return View("modificarCadete",cadeteViewModel);
+        }
 
     }
 
@@ -96,12 +119,12 @@ public class CadetesController : Controller
 
         try
         {
-            repCadetes.eliminarCadete(ID);
+            _repCadetes.eliminarCadete(ID);
             return RedirectToAction("listarCadetes");
         }
         catch (System.Exception)
-        {
-            // Qué hacer acá?
+        {   
+            // Hubo un error y no se pudo eliminar el cadete.
             return RedirectToAction("listarCadetes");
         }
     }

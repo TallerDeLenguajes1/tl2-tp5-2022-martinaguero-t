@@ -5,6 +5,11 @@ public class PerfilDeMapeo : Profile {
     public PerfilDeMapeo(){
         CreateMap<Cadete, CadeteViewModel>().ReverseMap();
         CreateMap<Pedido, PedidoViewModel>().ReverseMap();
+        CreateMap<Cliente, ClienteViewModel>().ReverseMap();
+        CreateMap<Pedido, PedidosCadetesClientesViewModel>().ReverseMap(); 
+        CreateMap<Pedido, PedidosCadetesViewModel>().ReverseMap(); 
+
+        
         // CreateMap<List<Cadete>,List<CadeteViewModel>>().ReverseMap();
         /* (???)
         CreateMap<List<Cadete>, ListaCadeteViewModel>().ForMember(

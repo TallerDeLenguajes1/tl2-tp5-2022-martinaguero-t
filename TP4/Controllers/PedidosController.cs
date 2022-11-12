@@ -10,74 +10,138 @@ namespace TP4.Controllers
     {
         private readonly ILogger<PedidosController> _logger;
         private IMapper _mapper;
-        private static RepositorioPedidos repPedidos = new RepositorioPedidos();
+        
+        private static IRepositorioPedidos _repPedidos;
+        private static IRepositorioCadetes _repCadetes;
 
-        public PedidosController(ILogger<PedidosController> logger, IMapper mapper)
+        private static IRepositorioClientes _repClientes;
+
+        public PedidosController(ILogger<PedidosController> logger, IMapper mapper, IRepositorioCadetes repCadetes, IRepositorioPedidos repPedidos, IRepositorioClientes repClientes)
         {
             _logger = logger;
             _mapper = mapper;
+            _repCadetes = repCadetes;
+            _repClientes = repClientes;
+            _repPedidos = repPedidos;
         }
 
         public IActionResult listarPedidos(){
-            var pedidos = repPedidos.getPedidos();
-            var pedidosViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
-            return View(pedidosViewModel);
+            try
+            {
+                var pedidos = _repPedidos.obtenerPedidos();
+                var pedidosViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
+                return View(pedidosViewModel);
+            }
+            catch (System.Exception ex)
+            {
+                ViewBag.Error = ex.Message; 
+                return View(new PedidoViewModel());
+            }
         }
 
 
         [HttpGet]   
         public IActionResult crearPedido(){ 
-            RepositorioCadetes infoCadetes = new RepositorioCadetes();
-            if(infoCadetes.getCadetes().Any()){
-                return View(new PedidoViewModel());
-            } else {
-                return RedirectToAction("listarPedidos");
+            
+            try
+            {
+                var cadetes = _repCadetes.obtenerCadetes();
+                var clientes = _repClientes.obtenerClientes();
+
+                if(cadetes.Any() && clientes.Any()){
+
+                    PedidosCadetesClientesViewModel pedidosCadetesClientes = new PedidosCadetesClientesViewModel();
+                    pedidosCadetesClientes.Cadetes = _mapper.Map<List<CadeteViewModel>>(cadetes);
+                    pedidosCadetesClientes.Clientes = _mapper.Map<List<ClienteViewModel>>(clientes);
+                    
+                    return View(pedidosCadetesClientes);
+
+                } else {
+                    return RedirectToAction("listarPedidos");
+                }
+            }
+            catch (System.Exception)
+            {
+                return RedirectToAction("listarPedidos"); 
             }
         }   
 
         [HttpPost]
         public IActionResult crearPedidoPost(PedidoViewModel pedidoViewModel){
 
-            if(ModelState.IsValid){
-                var pedido = _mapper.Map<Pedido>(pedidoViewModel);
-                repPedidos.addPedido(pedido);
-                return RedirectToAction("listarPedidos");
-            } 
+            try
+            {
+                if(ModelState.IsValid){
+                    var pedido = _mapper.Map<Pedido>(pedidoViewModel);
+                    _repPedidos.agregarPedido(pedido);
+                    return RedirectToAction("listarPedidos");
+                } 
 
-            return View("crearPedido", pedidoViewModel);
+                return View("crearPedido", pedidoViewModel);
+                
+            }
+            catch (System.Exception)
+            {
+                return RedirectToAction("listarPedidos"); 
+            }
 
         }
 
         [HttpGet]
         public IActionResult eliminarPedido(int numPedido){
-            repPedidos.eliminarPedido(numPedido);
-            return RedirectToAction("listarPedidos");
+
+            try
+            {
+                _repPedidos.eliminarPedido(numPedido);
+                return RedirectToAction("listarPedidos");
+            }
+            catch (System.Exception)
+            {
+                return RedirectToAction("listarPedidos");
+            }
         }
 
         public IActionResult modificarPedido(int numPedido){
 
-            var pedidos = repPedidos.getPedidos();
-            Pedido? pedido = pedidos.Find(pedido => pedido.Numero == numPedido);
+            try
+            {
+                var pedidos = _repPedidos.obtenerPedidos();
+                Pedido? pedido = pedidos.Find(pedido => pedido.Numero == numPedido);
 
-            if(pedido != null){
-                var pedidoViewModel = _mapper.Map<PedidoViewModel>(pedido);
-                return View(pedidoViewModel);
+                if(pedido != null){
 
-            } else{ 
+                    PedidosCadetesViewModel pedidosCadetes = _mapper.Map<PedidosCadetesViewModel>(pedido);
+                    pedidosCadetes.Cadetes = _mapper.Map<List<CadeteViewModel>>(_repCadetes.obtenerCadetes());
+
+                    return View(pedidosCadetes);
+
+                } else{ 
+                    return RedirectToAction("listarPedidos");
+                }
+            }
+            catch (System.Exception)
+            {
                 return RedirectToAction("listarPedidos");
             }
         }
 
         [HttpPost]
         public IActionResult modificarPedidoPost(PedidoViewModel pedidoViewModel){
+            
+            try
+            {
+                if(ModelState.IsValid){
+                    var pedido = _mapper.Map<Pedido>(pedidoViewModel);
+                    _repPedidos.modificarPedido(pedido);
+                    return RedirectToAction("listarPedidos");
+                }
 
-            if(ModelState.IsValid){
-                var pedido = _mapper.Map<Pedido>(pedidoViewModel);
-                repPedidos.modificarPedido(pedido);
+                return View("modificarPedido",pedidoViewModel);
+            }
+            catch (System.Exception)
+            {
                 return RedirectToAction("listarPedidos");
             }
-
-            return View("modificarPedido",pedidoViewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

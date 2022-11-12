@@ -1,12 +1,16 @@
 namespace TP4.ViewModels;
 using System.ComponentModel.DataAnnotations;
-public class PedidoViewModel {
+public class PedidosCadetesViewModel {  
+
+    private List<CadeteViewModel> cadetes;
     private int numero;
     public string? observaciones;
     private bool estaRealizado;
     private int idCadete;
     private int idCliente;
 
+    public List<CadeteViewModel> Cadetes {get => cadetes; set => cadetes = value; }
+    
     public int Numero { get => numero; set => numero = value; }
 
     [Required]
@@ -19,10 +23,8 @@ public class PedidoViewModel {
     [Required] 
     public int IdCadete { get => idCadete; set => idCadete = value; }
 
-    [Display(Name = "ID del Cliente")]
+    [Display(Name = "Cliente")]
     [Required] 
     public int IdCliente { get => idCliente; set => idCliente = value; }
-
-
 }
 

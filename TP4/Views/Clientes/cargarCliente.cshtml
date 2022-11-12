@@ -1,9 +1,9 @@
-@model TP4.ViewModels.CadeteViewModel
+@model TP4.ViewModels.ClienteViewModel
 
 <section>
-    <h1 class="text-center">Cargar cadete</h1>
+    <h1 class="text-center">Cargar cliente</h1>
     <article>
-        <form asp-controller="Cadetes" asp-action="cargarCadetePost" method="post">
+        <form asp-controller="Clientes" asp-action="cargarClientePost" method="post">
 
             <label asp-for="@Model.Nombre"> @Html.DisplayNameFor(Model => Model.Nombre)
                 <input asp-for="@Model.Nombre" type="text">
@@ -19,6 +19,11 @@
                 <input name="telefono" type="text" value="@Model.Telefono">
             </label>    
             <span class="form-control" asp-validation-for="@Model.Telefono" ></span> 
+
+            <label for="@Model.DatosReferenciaDireccion"> @Html.DisplayNameFor(Model => Model.DatosReferenciaDireccion)
+                <input name="datosReferenciaDireccion" type="text" value="@Model.DatosReferenciaDireccion">
+            </label>    
+            <span class="form-control" asp-validation-for="@Model.DatosReferenciaDireccion"></span> 
 
             <input type="submit" value="Cargar">
         </form>

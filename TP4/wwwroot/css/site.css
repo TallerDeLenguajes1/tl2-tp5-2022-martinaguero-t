@@ -37,7 +37,13 @@ p {
   margin-top : 1em;
 }
 
-.extrasListarPedidos, .extrasListarCadetes {
+.excepcionDB {
+  padding:0.5em;
+  background-color: rgb(227, 135, 135);
+  border-radius: 0.2em;
+}
+
+.extrasListarPedidos, .extrasListarCadetes, .extrasListarClientes {
   background-color :rgba(159, 242, 214, 0.824);
   padding: 0.4em;
   margin: 1em auto;
@@ -45,7 +51,7 @@ p {
   width:50%;
 }
 
-.extrasListarCadetes a, .extrasListarPedidos a{
+.extrasListarCadetes a, .extrasListarPedidos a, .extrasListarClientes a{
   color:teal;
 }
 

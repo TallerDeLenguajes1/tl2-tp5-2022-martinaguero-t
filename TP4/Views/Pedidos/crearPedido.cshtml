@@ -1,24 +1,28 @@
-@model TP4.ViewModels.PedidoViewModel
-@{ RepositorioCadetes infoCadetes = new RepositorioCadetes();}
+@model TP4.ViewModels.PedidosCadetesClientesViewModel
 
 <section>
     <h1 class="text-center">Crear pedido:</h1>
     <article>
         <form asp-controller="Pedidos" asp-action="crearPedidoPost" method="post">
 
-            <label asp-for="@Model.IdCliente"> @Html.DisplayNameFor(Model => Model.IdCliente)
-                <input asp-for="@Model.IdCliente">
-            </label>
-            <span class="form-control" asp-validation-for="@Model.IdCliente" ></span>
-
             <label asp-for="@Model.IdCadete"> @Html.DisplayNameFor(Model => Model.IdCadete)
             <select asp-for="@Model.IdCadete">
-                @foreach (var cadete in infoCadetes.getCadetes())
+                @foreach (var cadete in Model.Cadetes)
                 {
                     <option value="@cadete.ID">@cadete.Nombre</option>
                 }
             </select>
             </label>
+
+            <label asp-for="@Model.IdCliente"> @Html.DisplayNameFor(Model => Model.IdCliente)
+            <select asp-for="@Model.IdCliente">
+                @foreach (var cliente in Model.Clientes)
+                {
+                    <option value="@cliente.ID">@cliente.Nombre</option>
+                }
+            </select>
+            </label>
+
             <span class="form-control" asp-validation-for="@Model.IdCadete" ></span>
 
             <label asp-for="@Model.Observaciones"> @Html.DisplayNameFor(Model => Model.Observaciones)

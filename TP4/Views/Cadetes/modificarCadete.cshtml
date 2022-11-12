@@ -10,12 +10,12 @@
             </label>
             <span class="form-control" asp-validation-for="@Model.Nombre" ></span>
 
-            <label for="direccion"> @Html.DisplayNameFor(Model => Model.Direccion) 
+            <label for="@Model.Direccion"> @Html.DisplayNameFor(Model => Model.Direccion) 
                 <input name="direccion" type="text" value="@Model.Direccion">
             </label>
             <span class="form-control" asp-validation-for="@Model.Direccion" ></span>
 
-            <label for="telefono"> @Html.DisplayNameFor(Model => Model.Telefono)
+            <label for="@Model.Telefono"> @Html.DisplayNameFor(Model => Model.Telefono)
                 <input name="telefono" type="text" value="@Model.Telefono">
             </label>    
             <span class="form-control" asp-validation-for="@Model.Telefono" ></span>
