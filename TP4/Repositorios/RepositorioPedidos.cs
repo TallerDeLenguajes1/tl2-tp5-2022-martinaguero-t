@@ -13,6 +13,9 @@ namespace TP4.Models
         void eliminarPedido(int numPedido);
         List<Pedido> obtenerPedidos();
         void modificarPedido(Pedido pedidoAModificar);
+        List<Pedido> obtenerPedidosCadete(int idCadete);
+        List<Pedido> obtenerPedidosCliente(int idCliente);
+
     }
 
     public class RepositorioPedidos : IRepositorioPedidos
@@ -81,6 +84,111 @@ namespace TP4.Models
                 // Cerrar la conexion??
             }
 
+
+        }
+
+        public List<Pedido> obtenerPedidosCliente(int idCliente)
+        {
+
+            try
+            {
+                List<Pedido> pedidos = new List<Pedido>();
+
+                string consulta = "SELECT * FROM Pedido WHERE id_cliente = @idCliente";
+
+                using (SQLiteConnection conexion = new SQLiteConnection(cadenaConexion))
+                {
+
+                    conexion.Open();
+
+                    SQLiteCommand comando = new SQLiteCommand(consulta, conexion);
+                    comando.Parameters.Add(new SQLiteParameter("@idCliente", idCliente));
+
+                    using (SQLiteDataReader reader = comando.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            pedidos.Add(
+                            new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4))
+                            );
+                        }
+
+                    }
+
+                    conexion.Close();
+                }
+
+                return pedidos;
+
+            }
+            catch (SQLiteException exDB)
+            {
+                logger.Debug($"Hubo un error, no se pudo obtener información de los pedidos del cliente de ID {idCliente}. Excepción: " + exDB.ToString());
+                throw new Exception($"Hubo un error, no se pudo obtener información de los pedidos del cliente de ID {idCliente}.", exDB);
+            }
+            catch (Exception ex)
+            {
+                logger.Debug($"Hubo un error al conectar a la base de datos (para lectura de datos de pedidos del cliente de ID {idCliente}). Excepción: " + ex.ToString());
+                throw new Exception("Hubo un error al conectar a la base de datos.", ex);
+            }
+            finally
+            {
+                // Cerrar la conexion??
+            }
+
+
+        }
+
+        public List<Pedido> obtenerPedidosCadete(int idCadete)
+        {
+
+            try
+            {
+                List<Pedido> pedidos = new List<Pedido>();
+
+                string consulta = "SELECT * FROM Pedido WHERE id_cadete = @idCadete";
+
+                using (SQLiteConnection conexion = new SQLiteConnection(cadenaConexion))
+                {
+
+                    conexion.Open();
+
+                    SQLiteCommand comando = new SQLiteCommand(consulta, conexion);
+                    comando.Parameters.Add(new SQLiteParameter("@idCadete", idCadete));
+
+                    using (SQLiteDataReader reader = comando.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            pedidos.Add(
+                            new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4))
+                            );
+                        }
+
+                    }
+
+                    conexion.Close();
+                }
+
+                return pedidos;
+
+            }
+            catch (SQLiteException exDB)
+            {
+                logger.Debug($"Hubo un error, no se pudo obtener información de los pedidos del cadete de ID {idCadete}. Excepción: " + exDB.ToString());
+                throw new Exception($"Hubo un error, no se pudo obtener información de los pedidos del cadete de ID {idCadete}.", exDB);
+            }
+            catch (Exception ex)
+            {
+                logger.Debug($"Hubo un error al conectar a la base de datos (para lectura de datos de pedidos del cadete de ID {idCadete}). Excepción: " + ex.ToString());
+                throw new Exception("Hubo un error al conectar a la base de datos.", ex);
+            }
+            finally
+            {
+                // Cerrar la conexion??
+            }
 
         }
 

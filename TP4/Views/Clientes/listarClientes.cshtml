@@ -28,6 +28,9 @@
                                 Referencia dirección
                             </th>
                             <th>
+                                Mostrar pedidos
+                            </th>
+                            <th>
                                 Borrado
                             </th>
                             <th>
@@ -60,6 +63,9 @@
                                         -
                                     </td>
                                 }
+                                <td>
+                                    @Html.ActionLink("Listar","listarPedidosCliente","Pedidos", new {idCliente = cliente.ID})
+                                </td>
                                 <td>
                                     @Html.ActionLink("Eliminar","eliminarCliente","Clientes", new {id = cliente.ID})
                                 </td>

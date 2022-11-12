@@ -35,7 +35,7 @@ namespace TP4.Controllers
             catch (System.Exception ex)
             {
                 ViewBag.Error = ex.Message; 
-                return View(new PedidoViewModel());
+                return View(new List<PedidoViewModel>());
             }
         }
 
@@ -141,6 +141,36 @@ namespace TP4.Controllers
             catch (System.Exception)
             {
                 return RedirectToAction("listarPedidos");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult listarPedidosCliente(int idCliente){
+            try
+            {
+                var pedidos = _repPedidos.obtenerPedidosCliente(idCliente);
+                var pedidosViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
+                return View(pedidosViewModel);
+            }
+            catch (System.Exception ex)
+            {
+                ViewBag.Error = ex.Message; 
+                return View(new List<PedidoViewModel>());
+            }
+        }
+
+        [HttpGet]
+        public IActionResult listarPedidosCadete(int idCadete){
+            try
+            {
+                var pedidos = _repPedidos.obtenerPedidosCadete(idCadete);
+                var pedidosViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
+                return View(pedidosViewModel);
+            }
+            catch (System.Exception ex)
+            {
+                ViewBag.Error = ex.Message; 
+                return View(new List<PedidoViewModel>());
             }
         }
 

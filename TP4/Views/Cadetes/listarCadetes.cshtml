@@ -25,6 +25,9 @@
                                 Teléfono
                             </th>
                             <th>
+                                Mostrar pedidos
+                            </th>
+                            <th>
                                 Borrado
                             </th>
                             <th>
@@ -47,6 +50,9 @@
                                 </td>
                                 <td>
                                     @cadete.Telefono
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Listar","listarPedidosCadete","Pedidos", new {idCadete = cadete.ID})
                                 </td>
                                 <td>
                                     @Html.ActionLink("Eliminar","eliminarCadete","Cadetes", new {id = cadete.ID})

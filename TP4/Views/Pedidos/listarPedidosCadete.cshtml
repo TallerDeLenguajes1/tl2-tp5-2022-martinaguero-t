@@ -1,7 +1,7 @@
 @model List<TP4.ViewModels.PedidoViewModel>
 
 <section>
-    <h1 class="text-center">Listado de todos los pedidos</h1>
+    <h1 class="text-center">Listado de pedidos del cadete</h1>
     <article class="text-center">
         <p>Pedidos encontrados:</p>
             <table>
@@ -12,9 +12,6 @@
                         </th>
                         <th>
                             ID del cliente
-                        </th>
-                        <th>
-                            ID del cadete
                         </th>
                         <th>
                             Observaciones
@@ -40,9 +37,6 @@
                             <td>
                                 @pedido.IdCliente
                             </td>
-                            <td>
-                                @pedido.IdCadete
-                            </td>
                             @if(pedido.Observaciones!=null){
                                 <td>@pedido.Observaciones</td>
                             } else {
@@ -63,9 +57,6 @@
                     }
                 </tbody>
             </table>
-    </article>
-    <article>
-        <p class="extrasListarPedidos">Para registrar un nuevo pedido, <a asp-area="" asp-controller="Pedidos" asp-action="crearPedido">haga click aquí</a> (NOTA: deben haber cadetes y clientes cargados.).</p>
     </article>
 </section>
 
