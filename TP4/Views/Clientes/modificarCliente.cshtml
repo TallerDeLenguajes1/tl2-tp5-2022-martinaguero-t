@@ -5,23 +5,23 @@
     <article>
         <form asp-controller="Clientes" asp-action="modificarClientePost" method="post">
 
-             <label asp-for="@Model.Nombre"> @Html.DisplayNameFor(Model => Model.Nombre)
+            <label asp-for="@Model.Nombre"> @Html.DisplayNameFor(Model => Model.Nombre)
                 <input asp-for="@Model.Nombre" type="text">
             </label>
             <span class="form-control" asp-validation-for="@Model.Nombre" ></span>
 
-            <label for="@Model.Direccion"> @Html.DisplayNameFor(Model => Model.Direccion) 
-                <input name="direccion" type="text" value="@Model.Direccion">
+            <label asp-for="@Model.Direccion"> @Html.DisplayNameFor(Model => Model.Direccion) 
+                <input type="text" asp-for="@Model.Direccion">
             </label>
             <span class="form-control" asp-validation-for="@Model.Direccion" ></span>
 
-            <label for="@Model.Telefono"> @Html.DisplayNameFor(Model => Model.Telefono)
-                <input name="telefono" type="text" value="@Model.Telefono">
+            <label asp-for="@Model.Telefono"> @Html.DisplayNameFor(Model => Model.Telefono)
+                <input type="text" asp-for="@Model.Telefono">
             </label>    
             <span class="form-control" asp-validation-for="@Model.Telefono" ></span> 
 
-            <label for="@Model.DatosReferenciaDireccion"> @Html.DisplayNameFor(Model => Model.DatosReferenciaDireccion)
-                <input name="datosReferenciaDireccion" type="text" value="@Model.DatosReferenciaDireccion">
+            <label asp-for="@Model.DatosReferenciaDireccion"> @Html.DisplayNameFor(Model => Model.DatosReferenciaDireccion)
+                <input type="text" asp-for="@Model.DatosReferenciaDireccion">
             </label>    
             <span class="form-control" asp-validation-for="@Model.DatosReferenciaDireccion"></span> 
 

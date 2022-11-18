@@ -5,20 +5,20 @@
     <article>
         <form asp-controller="Cadetes" asp-action="modificarCadetePost" method="post">
 
-            <label asp-for="@Model.nombre"> @Html.DisplayNameFor(Model => Model.Nombre)
-                <input asp-for="@Model.Nombre" type="text" value="@Model.Nombre">
+            <label asp-for="@Model.Nombre"> @Html.DisplayNameFor(Model => Model.Nombre)
+                <input asp-for="@Model.Nombre" type="text">
             </label>
             <span class="form-control" asp-validation-for="@Model.Nombre" ></span>
 
             <label for="@Model.Direccion"> @Html.DisplayNameFor(Model => Model.Direccion) 
-                <input name="direccion" type="text" value="@Model.Direccion">
+                <input type="text" asp-for="@Model.Direccion">
             </label>
             <span class="form-control" asp-validation-for="@Model.Direccion" ></span>
 
             <label for="@Model.Telefono"> @Html.DisplayNameFor(Model => Model.Telefono)
-                <input name="telefono" type="text" value="@Model.Telefono">
+                <input type="text" asp-for="@Model.Telefono">
             </label>    
-            <span class="form-control" asp-validation-for="@Model.Telefono" ></span>
+            <span class="form-control" asp-validation-for="@Model.Telefono" ></span> 
 
             @Html.HiddenFor(model => model.ID) <!-- Pasar el ID a la vista de manera oculta-->
             <input type="submit" value="Cargar">
