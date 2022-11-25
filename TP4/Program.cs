@@ -12,6 +12,15 @@ builder.Services.AddTransient<IRepositorioCadetes, RepositorioCadetes>();
 builder.Services.AddTransient<IRepositorioClientes, RepositorioClientes>();
 builder.Services.AddTransient<IRepositorioPedidos, RepositorioPedidos>();
 
+// Para trabajar con session
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromDays(100);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+}
+);
 
 var app = builder.Build();
 
@@ -29,6 +38,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+// Para trabajar con session
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

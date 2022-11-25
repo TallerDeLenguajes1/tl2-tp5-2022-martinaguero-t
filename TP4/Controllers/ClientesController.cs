@@ -67,9 +67,7 @@ public class ClientesController : Controller
         
         try
         {
-            
-            var clientes = _repClientes.obtenerClientes();
-            Cliente? clienteBuscado = clientes.Find(cliente => cliente.ID == id);
+            var clienteBuscado = _repClientes.buscarClientePorID(id);
 
             if(clienteBuscado != null){
                 var clienteViewModel = _mapper.Map<ClienteViewModel>(clienteBuscado);

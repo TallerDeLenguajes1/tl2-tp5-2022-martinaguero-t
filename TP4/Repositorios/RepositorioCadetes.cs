@@ -13,6 +13,7 @@ namespace TP4.Models
         void eliminarCadete(int idCadete);
         List<Cadete> obtenerCadetes();
         void modificarCadete(Cadete cadeteAModificar);
+        Cadete? buscarCadetePorID(int idCadete);
     }
 
     public class RepositorioCadetes : IRepositorioCadetes
@@ -69,21 +70,61 @@ namespace TP4.Models
             catch (SQLiteException exDB)
             {
                 logger.Debug("Hubo un error, no se pudo obtener información de los cadetes. Excepción: " + exDB.ToString());
-                throw new Exception("Hubo un error, no se pudo obtener información de los c.", exDB);
+                throw new Exception("Hubo un error, no se pudo obtener información de los cadetes.", exDB);
             }
             catch (Exception ex)
             {
                 logger.Debug("Hubo un error al conectar a la base de datos (para lectura de datos de cadetes). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
             }
-            finally
-            {
-                // Cerrar la conexion??
-            }
-
 
         }
 
+        public Cadete? buscarCadetePorID(int idCadete){
+
+            try
+            {
+                Cadete? cadeteBuscado = null;
+
+                string consulta = "SELECT * FROM Cadete WHERE id = @idCadete";
+
+                using (SQLiteConnection conexion = new SQLiteConnection(cadenaConexion))
+                {
+
+                    conexion.Open();
+
+                    SQLiteCommand comando = new SQLiteCommand(consulta, conexion);
+
+                    comando.Parameters.Add(new SQLiteParameter("@idCadete", idCadete));
+
+                    using (SQLiteDataReader reader = comando.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            cadeteBuscado = new Cadete(reader.GetInt32(0), reader[1].ToString(), reader[2].ToString(), reader[3].ToString());
+                        }
+
+                    }
+
+                    conexion.Close();
+                }
+
+                return cadeteBuscado;
+
+            }
+            catch (SQLiteException exDB)
+            {
+                logger.Debug($"Hubo un error, no se pudo obtener información del cadete de ID {idCadete}. Excepción: " + exDB.ToString());
+                throw new Exception($"Hubo un error, no se pudo obtener información de un cadete de ID {idCadete}.", exDB);
+            }
+            catch (Exception ex)
+            {
+                logger.Debug("Hubo un error al conectar a la base de datos (para lectura de datos de un cadete). Excepción: " + ex.ToString());
+                throw new Exception("Hubo un error al conectar a la base de datos.", ex);
+            }
+
+        }
         public void agregarCadete(Cadete cadete)
         {
             try
@@ -121,10 +162,7 @@ namespace TP4.Models
                 logger.Debug("Hubo un error al conectar a la base de datos (para cargar datos de un cadete). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
             }
-            finally
-            {
-                // Cerrar la conexion??
-            }
+
         }
 
 
@@ -162,10 +200,7 @@ namespace TP4.Models
                 logger.Debug($"Hubo un error al conectar a la base de datos (para eliminar datos de un cadete de ID {idCadete}). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
             }
-            finally
-            {
-                // Cerrar la conexion??
-            }
+
         }
 
         public void modificarCadete(Cadete cadeteAModificar)
@@ -205,13 +240,7 @@ namespace TP4.Models
                 logger.Debug($"Hubo un error al conectar a la base de datos (para actualizar datos de un cadete de ID {cadeteAModificar.ID}). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
             }
-            finally
-            {
-                // Cerrar la conexion??
-            }
+
         }
-
-
-
     }
 }

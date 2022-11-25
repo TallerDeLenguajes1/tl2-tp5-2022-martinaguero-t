@@ -15,6 +15,7 @@ namespace TP4.Models
         void modificarPedido(Pedido pedidoAModificar);
         List<Pedido> obtenerPedidosCadete(int idCadete);
         List<Pedido> obtenerPedidosCliente(int idCliente);
+        Pedido? buscarPedidoPorNumero(int numPedido);
 
     }
 
@@ -57,8 +58,7 @@ namespace TP4.Models
                         while (reader.Read())
                         {
                             pedidos.Add(
-                            new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4))
-                            );
+                            new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4)));
                         }
 
                     }
@@ -79,11 +79,52 @@ namespace TP4.Models
                 logger.Debug("Hubo un error al conectar a la base de datos (para lectura de datos de pedidos). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
             }
-            finally
-            {
-                // Cerrar la conexion??
-            }
 
+        }
+        
+        public Pedido? buscarPedidoPorNumero(int numPedido){
+
+            try
+            {
+                Pedido? pedidoBuscado = null;
+
+                string consulta = "SELECT * FROM Pedido WHERE numero = @numPedido";
+
+                using (SQLiteConnection conexion = new SQLiteConnection(cadenaConexion))
+                {
+
+                    conexion.Open();
+
+                    SQLiteCommand comando = new SQLiteCommand(consulta, conexion);
+
+                    comando.Parameters.Add(new SQLiteParameter("@numPedido", numPedido));
+
+                    using (SQLiteDataReader reader = comando.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            pedidoBuscado = new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4));
+                        }
+
+                    }
+
+                    conexion.Close();
+                }
+
+                return pedidoBuscado;
+
+            }
+            catch (SQLiteException exDB)
+            {
+                logger.Debug($"Hubo un error, no se pudo obtener información del pedido de número {numPedido}. Excepción: " + exDB.ToString());
+                throw new Exception($"Hubo un error, no se pudo obtener información de un pedido de número {numPedido}.", exDB);
+            }
+            catch (Exception ex)
+            {
+                logger.Debug("Hubo un error al conectar a la base de datos (para lectura de datos de un pedido). Excepción: " + ex.ToString());
+                throw new Exception("Hubo un error al conectar a la base de datos.", ex);
+            }
 
         }
 
@@ -132,11 +173,6 @@ namespace TP4.Models
                 logger.Debug($"Hubo un error al conectar a la base de datos (para lectura de datos de pedidos del cliente de ID {idCliente}). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
             }
-            finally
-            {
-                // Cerrar la conexion??
-            }
-
 
         }
 
@@ -184,10 +220,6 @@ namespace TP4.Models
             {
                 logger.Debug($"Hubo un error al conectar a la base de datos (para lectura de datos de pedidos del cadete de ID {idCadete}). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
-            }
-            finally
-            {
-                // Cerrar la conexion??
             }
 
         }
@@ -267,10 +299,7 @@ namespace TP4.Models
                 logger.Debug($"Hubo un error al conectar a la base de datos (para eliminar datos de un pedido de numero {numPedido}). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
             }
-            finally
-            {
-                // Cerrar la conexion??
-            }
+
         }
 
         public void modificarPedido(Pedido pedidoAModificar)
@@ -311,10 +340,7 @@ namespace TP4.Models
                 logger.Debug($"Hubo un error al conectar a la base de datos (para actualizar datos de un pedido de número {pedidoAModificar.Numero}). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
             }
-            finally
-            {
-                // Cerrar la conexion??
-            }
+
         }
 
     }

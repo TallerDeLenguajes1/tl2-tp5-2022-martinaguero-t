@@ -10,10 +10,8 @@ namespace TP4.Controllers
     {
         private readonly ILogger<PedidosController> _logger;
         private IMapper _mapper;
-        
         private static IRepositorioPedidos _repPedidos;
         private static IRepositorioCadetes _repCadetes;
-
         private static IRepositorioClientes _repClientes;
 
         public PedidosController(ILogger<PedidosController> logger, IMapper mapper, IRepositorioCadetes repCadetes, IRepositorioPedidos repPedidos, IRepositorioClientes repClientes)
@@ -105,8 +103,7 @@ namespace TP4.Controllers
 
             try
             {
-                var pedidos = _repPedidos.obtenerPedidos();
-                Pedido? pedido = pedidos.Find(pedido => pedido.Numero == numPedido);
+                var pedido = _repPedidos.buscarPedidoPorNumero(numPedido);
 
                 if(pedido != null){
 

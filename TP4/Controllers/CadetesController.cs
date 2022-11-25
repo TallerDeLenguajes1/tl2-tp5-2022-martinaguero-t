@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using TP4.Models;
 using TP4.ViewModels;
+// Para AutoMapper
 using AutoMapper;
+// Para session
+using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Http;
 
 namespace TP4.Controllers;
 
@@ -70,9 +74,7 @@ public class CadetesController : Controller
         
         try
         {
-            
-            var cadetes = _repCadetes.obtenerCadetes();
-            Cadete? cadeteBuscado = cadetes.Find(cadete => cadete.ID == id);
+            Cadete? cadeteBuscado = _repCadetes.buscarCadetePorID(id);
 
             if(cadeteBuscado != null){
                 var cadeteViewModel = _mapper.Map<CadeteViewModel>(cadeteBuscado);

@@ -13,6 +13,7 @@ namespace TP4.Models
         void eliminarCliente(int idCliente);
         List<Cliente> obtenerClientes();
         void modificarCliente(Cliente clienteAModificar);
+        Cliente? buscarClientePorID(int idCliente);
     }
 
     public class RepositorioClientes : IRepositorioClientes
@@ -29,7 +30,7 @@ namespace TP4.Models
             this.cadenaConexion = this._configuration.GetConnectionString("SQLite");
             // solo puedo asignar un valor a un atributo readonly en el constructor o en la misma declaración
             // inyección de dependencia (cadenaConexion)
-        }
+        } 
 
         public List<Cliente> obtenerClientes()
         {
@@ -68,18 +69,59 @@ namespace TP4.Models
             catch (SQLiteException exDB)
             {
                 logger.Debug("Hubo un error, no se pudo obtener información de los clientes. Excepción: " + exDB.ToString());
-                throw new Exception("Hubo un error, no se pudo obtener información de los c.", exDB);
+                throw new Exception("Hubo un error, no se pudo obtener información de los clientes.", exDB);
             }
             catch (Exception ex)
             {
                 logger.Debug("Hubo un error al conectar a la base de datos (para lectura de datos de clientes). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
             }
-            finally
-            {
-                // Cerrar la conexion??
-            }
 
+        }
+
+        public Cliente? buscarClientePorID(int idCliente){
+
+            try
+            {
+                Cliente? clienteBuscado = null;
+
+                string consulta = "SELECT * FROM Cliente WHERE id = @idCliente";
+
+                using (SQLiteConnection conexion = new SQLiteConnection(cadenaConexion))
+                {
+
+                    conexion.Open();
+
+                    SQLiteCommand comando = new SQLiteCommand(consulta, conexion);
+
+                    comando.Parameters.Add(new SQLiteParameter("@idCliente", idCliente));
+
+                    using (SQLiteDataReader reader = comando.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            clienteBuscado = new Cliente(reader.GetInt32(0),reader[1].ToString(),reader[2].ToString(),reader[3].ToString(),reader[4].ToString());
+                        }
+
+                    }
+
+                    conexion.Close();
+                }
+
+                return clienteBuscado;
+
+            }
+            catch (SQLiteException exDB)
+            {
+                logger.Debug($"Hubo un error, no se pudo obtener información del cliente de ID {idCliente}. Excepción: " + exDB.ToString());
+                throw new Exception($"Hubo un error, no se pudo obtener información de un cliente de ID {idCliente}.", exDB);
+            }
+            catch (Exception ex)
+            {
+                logger.Debug("Hubo un error al conectar a la base de datos (para lectura de datos de un cliente). Excepción: " + ex.ToString());
+                throw new Exception("Hubo un error al conectar a la base de datos.", ex);
+            }
 
         }
 
@@ -103,7 +145,6 @@ namespace TP4.Models
                     comando.Parameters.Add(new SQLiteParameter("@telefono", cliente.Telefono));
                     comando.Parameters.Add(new SQLiteParameter("@refdir", cliente.DatosReferenciaDireccion));
 
-
                     comando.ExecuteNonQuery();
 
                     conexion.Close();
@@ -122,10 +163,7 @@ namespace TP4.Models
                 logger.Debug("Hubo un error al conectar a la base de datos (para cargar datos de un cliente). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
             }
-            finally
-            {
-                // Cerrar la conexion??
-            }
+
         }
 
 
@@ -163,10 +201,7 @@ namespace TP4.Models
                 logger.Debug($"Hubo un error al conectar a la base de datos (para eliminar datos de un cliente de ID {idCliente}). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
             }
-            finally
-            {
-                // Cerrar la conexion??
-            }
+
         }
 
         public void modificarCliente(Cliente clienteAModificar)
@@ -207,13 +242,7 @@ namespace TP4.Models
                 logger.Debug($"Hubo un error al conectar a la base de datos (para actualizar datos de un cliente de ID {clienteAModificar.ID}). Excepción: " + ex.ToString());
                 throw new Exception("Hubo un error al conectar a la base de datos.", ex);
             }
-            finally
-            {
-                // Cerrar la conexion??
-            }
+            
         }
-
-
-
     }
 }
