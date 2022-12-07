@@ -1,5 +1,6 @@
 using AutoMapper;
 using TP4.Models;
+using TP4.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

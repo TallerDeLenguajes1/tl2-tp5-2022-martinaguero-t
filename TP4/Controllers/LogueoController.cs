@@ -1,15 +1,22 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TP4.Models;
+using TP4.ViewModels;
 using TP4.Repositories;
+
+// Para AutoMapper
+using AutoMapper;
+// Para session
+using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Http;
 
 namespace TP4.Controllers;
 
-public class HomeController : Controller
+public class LogueoController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<LogueoController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public LogueoController(ILogger<LogueoController> logger)
     {
         _logger = logger;
     }
@@ -22,6 +29,6 @@ public class HomeController : Controller
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View("Error!");
     }
 }

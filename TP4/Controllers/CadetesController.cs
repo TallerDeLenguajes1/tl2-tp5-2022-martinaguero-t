@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TP4.Models;
 using TP4.ViewModels;
+using TP4.Repositories;
 // Para AutoMapper
 using AutoMapper;
 // Para session
