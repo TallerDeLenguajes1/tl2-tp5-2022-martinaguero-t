@@ -1,5 +1,9 @@
 @model TP4.ViewModels.CadeteViewModel
 
+@{
+    ViewBag.Title = "Carga de cadete";
+}
+
 <section>
     <h1 class="text-center">Cargar cadete</h1>
     <article>
@@ -24,3 +28,5 @@
         </form>
     </article>
 </section>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> } 

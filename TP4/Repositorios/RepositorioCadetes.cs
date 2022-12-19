@@ -22,17 +22,19 @@ public class RepositorioCadetes : IRepositorioCadetes
     // readonly para que cadenaConexion sea inmutable
     private readonly IConfiguration _configuration;
     // para usar la cadena de conexión del JSON
-    public RepositorioCadetes(IConfiguration configuration)
+
+    private readonly ILogger<RepositorioCadetes> _logger;
+    public RepositorioCadetes(IConfiguration configuration, ILogger<RepositorioCadetes> logger)
     {
         this._configuration = configuration;
         //this.cadenaConexion = "Data Source=DB/PedidosDB.db;Version=3;";
         this.cadenaConexion = this._configuration.GetConnectionString("SQLite");
         // solo puedo asignar un valor a un atributo readonly en el constructor o en la misma declaración
         // inyección de dependencia (cadenaConexion)
-    }
 
-    private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-    // Se elimina la lista de cadetes y la asignación de autonuméricos, trabajo con la DB.
+        this._logger = logger;
+    }
+    // private static readonly Logger logger = LogManager.GetCurrentClassLogger();
     public List<Cadete> obtenerCadetes()
     {
 
@@ -69,12 +71,12 @@ public class RepositorioCadetes : IRepositorioCadetes
         }
         catch (SQLiteException exDB)
         {
-            logger.Debug("Hubo un error, no se pudo obtener información de los cadetes. Excepción: " + exDB.ToString());
+            _logger.LogDebug("Hubo un error, no se pudo obtener información de los cadetes. Excepción: " + exDB.ToString());
             throw new Exception("Hubo un error, no se pudo obtener información de los cadetes.", exDB);
         }
         catch (Exception ex)
         {
-            logger.Debug("Hubo un error al conectar a la base de datos (para lectura de datos de cadetes). Excepción: " + ex.ToString());
+            _logger.LogDebug("Hubo un error al conectar a la base de datos (para lectura de datos de cadetes). Excepción: " + ex.ToString());
             throw new Exception("Hubo un error al conectar a la base de datos.", ex);
         }
 
@@ -115,12 +117,12 @@ public class RepositorioCadetes : IRepositorioCadetes
         }
         catch (SQLiteException exDB)
         {
-            logger.Debug($"Hubo un error, no se pudo obtener información del cadete de ID {idCadete}. Excepción: " + exDB.ToString());
+            _logger.LogDebug($"Hubo un error, no se pudo obtener información del cadete de ID {idCadete}. Excepción: " + exDB.ToString());
             throw new Exception($"Hubo un error, no se pudo obtener información de un cadete de ID {idCadete}.", exDB);
         }
         catch (Exception ex)
         {
-            logger.Debug("Hubo un error al conectar a la base de datos (para lectura de datos de un cadete). Excepción: " + ex.ToString());
+            _logger.LogDebug("Hubo un error al conectar a la base de datos (para lectura de datos de un cadete). Excepción: " + ex.ToString());
             throw new Exception("Hubo un error al conectar a la base de datos.", ex);
         }
 
@@ -149,17 +151,17 @@ public class RepositorioCadetes : IRepositorioCadetes
                 conexion.Close();
             }
 
-            logger.Info($"Se agregó el cadete de ID {cadete.ID}");
+            _logger.LogInformation($"Se agregó un cadete con la siguiente información: nombre {cadete.Nombre}, direccion {cadete.Direccion}, telefono {cadete.Telefono}.");
 
         }
         catch (SQLiteException exDB)
         {
-            logger.Debug("Hubo un error, no se pudo cargar la información de un cadete. Excepción: " + exDB.ToString());
+            _logger.LogDebug("Hubo un error, no se pudo cargar la información de un cadete. Excepción: " + exDB.ToString());
             throw new Exception("Hubo un error, no se pudo cargar la información del cadete.", exDB);
         }
         catch (Exception ex)
         {
-            logger.Debug("Hubo un error al conectar a la base de datos (para cargar datos de un cadete). Excepción: " + ex.ToString());
+            _logger.LogDebug("Hubo un error al conectar a la base de datos (para cargar datos de un cadete). Excepción: " + ex.ToString());
             throw new Exception("Hubo un error al conectar a la base de datos.", ex);
         }
 
@@ -187,17 +189,17 @@ public class RepositorioCadetes : IRepositorioCadetes
                 conexion.Close();
             }
 
-            logger.Info($"Se eliminó el cadete de ID {idCadete}");
+            _logger.LogInformation($"Se eliminó el cadete de ID {idCadete}");
 
         }
         catch (SQLiteException exDB)
         {
-            logger.Debug($"Hubo un error, no se pudo eliminar el registro de un cadete de ID {idCadete}. Excepción: " + exDB.ToString());
+            _logger.LogDebug($"Hubo un error, no se pudo eliminar el registro de un cadete de ID {idCadete}. Excepción: " + exDB.ToString());
             throw new Exception("Hubo un error, no se pudo eliminar el registro del cadete.", exDB);
         }
         catch (Exception ex)
         {
-            logger.Debug($"Hubo un error al conectar a la base de datos (para eliminar datos de un cadete de ID {idCadete}). Excepción: " + ex.ToString());
+            _logger.LogDebug($"Hubo un error al conectar a la base de datos (para eliminar datos de un cadete de ID {idCadete}). Excepción: " + ex.ToString());
             throw new Exception("Hubo un error al conectar a la base de datos.", ex);
         }
 
@@ -227,17 +229,17 @@ public class RepositorioCadetes : IRepositorioCadetes
                 conexion.Close();
             }
 
-            logger.Info($"Se modificó la información del cadete de ID {cadeteAModificar.ID}");
+            _logger.LogInformation($"Se modificó la información del cadete de ID {cadeteAModificar.ID}");
 
         }
         catch (SQLiteException exDB)
         {
-            logger.Debug($"Hubo un error, no se pudo actualizar la información de un cadete de ID {cadeteAModificar.ID}. Excepción: " + exDB.ToString());
+            _logger.LogDebug($"Hubo un error, no se pudo actualizar la información de un cadete de ID {cadeteAModificar.ID}. Excepción: " + exDB.ToString());
             throw new Exception("Hubo un error, no se pudo actualizar el registro del cadete.", exDB);
         }
         catch (Exception ex)
         {
-            logger.Debug($"Hubo un error al conectar a la base de datos (para actualizar datos de un cadete de ID {cadeteAModificar.ID}). Excepción: " + ex.ToString());
+            _logger.LogDebug($"Hubo un error al conectar a la base de datos (para actualizar datos de un cadete de ID {cadeteAModificar.ID}). Excepción: " + ex.ToString());
             throw new Exception("Hubo un error al conectar a la base de datos.", ex);
         }
 

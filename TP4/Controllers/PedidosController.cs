@@ -11,9 +11,9 @@ namespace TP4.Controllers
     {
         private readonly ILogger<PedidosController> _logger;
         private IMapper _mapper;
-        private static IRepositorioPedidos _repPedidos;
-        private static IRepositorioCadetes _repCadetes;
-        private static IRepositorioClientes _repClientes;
+        private IRepositorioPedidos _repPedidos;
+        private IRepositorioCadetes _repCadetes;
+        private IRepositorioClientes _repClientes;
 
         public PedidosController(ILogger<PedidosController> logger, IMapper mapper, IRepositorioCadetes repCadetes, IRepositorioPedidos repPedidos, IRepositorioClientes repClientes)
         {
