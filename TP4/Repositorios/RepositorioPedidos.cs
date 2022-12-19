@@ -25,20 +25,19 @@ public class RepositorioPedidos : IRepositorioPedidos
     // readonly para que cadenaConexion sea inmutable
     private readonly IConfiguration _configuration;
     // para usar la cadena de conexión del JSON
-    private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-    public RepositorioPedidos(IConfiguration configuration)
+    private readonly ILogger<RepositorioPedidos> _logger;
+    public RepositorioPedidos(IConfiguration configuration, ILogger<RepositorioPedidos> logger)
     {
         this._configuration = configuration;
-        //this.cadenaConexion = "Data Source=DB/PedidosDB.db;Version=3;";
         this.cadenaConexion = this._configuration.GetConnectionString("SQLite");
-        // solo puedo asignar un valor a un atributo readonly en el constructor o en la misma declaración
         // inyección de dependencia (cadenaConexion)
+        this._logger = logger;
+        // inyección de dependencia (NLog Logger)
     }
 
     public List<Pedido> obtenerPedidos()
     {
 
-        // Para trabajar con DB
         try
         {
             List<Pedido> pedidos = new List<Pedido>();
@@ -71,12 +70,12 @@ public class RepositorioPedidos : IRepositorioPedidos
         }
         catch (SQLiteException exDB)
         {
-            logger.Debug("Hubo un error, no se pudo obtener información de los pedidos. Excepción: " + exDB.ToString());
+            _logger.LogDebug("Hubo un error, no se pudo obtener información de los pedidos. Excepción: " + exDB.ToString());
             throw new Exception("Hubo un error, no se pudo obtener información de los pedidos.", exDB);
         }
         catch (Exception ex)
         {
-            logger.Debug("Hubo un error al conectar a la base de datos (para lectura de datos de pedidos). Excepción: " + ex.ToString());
+            _logger.LogDebug("Hubo un error al conectar a la base de datos (para lectura de datos de pedidos). Excepción: " + ex.ToString());
             throw new Exception("Hubo un error al conectar a la base de datos.", ex);
         }
 
@@ -117,12 +116,12 @@ public class RepositorioPedidos : IRepositorioPedidos
         }
         catch (SQLiteException exDB)
         {
-            logger.Debug($"Hubo un error, no se pudo obtener información del pedido de número {numPedido}. Excepción: " + exDB.ToString());
+            _logger.LogDebug($"Hubo un error, no se pudo obtener información del pedido de número {numPedido}. Excepción: " + exDB.ToString());
             throw new Exception($"Hubo un error, no se pudo obtener información de un pedido de número {numPedido}.", exDB);
         }
         catch (Exception ex)
         {
-            logger.Debug("Hubo un error al conectar a la base de datos (para lectura de datos de un pedido). Excepción: " + ex.ToString());
+            _logger.LogDebug("Hubo un error al conectar a la base de datos (para lectura de datos de un pedido). Excepción: " + ex.ToString());
             throw new Exception("Hubo un error al conectar a la base de datos.", ex);
         }
 
@@ -165,12 +164,12 @@ public class RepositorioPedidos : IRepositorioPedidos
         }
         catch (SQLiteException exDB)
         {
-            logger.Debug($"Hubo un error, no se pudo obtener información de los pedidos del cliente de ID {idCliente}. Excepción: " + exDB.ToString());
+            _logger.LogDebug($"Hubo un error, no se pudo obtener información de los pedidos del cliente de ID {idCliente}. Excepción: " + exDB.ToString());
             throw new Exception($"Hubo un error, no se pudo obtener información de los pedidos del cliente de ID {idCliente}.", exDB);
         }
         catch (Exception ex)
         {
-            logger.Debug($"Hubo un error al conectar a la base de datos (para lectura de datos de pedidos del cliente de ID {idCliente}). Excepción: " + ex.ToString());
+            _logger.LogDebug($"Hubo un error al conectar a la base de datos (para lectura de datos de pedidos del cliente de ID {idCliente}). Excepción: " + ex.ToString());
             throw new Exception("Hubo un error al conectar a la base de datos.", ex);
         }
 
@@ -213,12 +212,12 @@ public class RepositorioPedidos : IRepositorioPedidos
         }
         catch (SQLiteException exDB)
         {
-            logger.Debug($"Hubo un error, no se pudo obtener información de los pedidos del cadete de ID {idCadete}. Excepción: " + exDB.ToString());
+            _logger.LogDebug($"Hubo un error, no se pudo obtener información de los pedidos del cadete de ID {idCadete}. Excepción: " + exDB.ToString());
             throw new Exception($"Hubo un error, no se pudo obtener información de los pedidos del cadete de ID {idCadete}.", exDB);
         }
         catch (Exception ex)
         {
-            logger.Debug($"Hubo un error al conectar a la base de datos (para lectura de datos de pedidos del cadete de ID {idCadete}). Excepción: " + ex.ToString());
+            _logger.LogDebug($"Hubo un error al conectar a la base de datos (para lectura de datos de pedidos del cadete de ID {idCadete}). Excepción: " + ex.ToString());
             throw new Exception("Hubo un error al conectar a la base de datos.", ex);
         }
 
@@ -249,17 +248,17 @@ public class RepositorioPedidos : IRepositorioPedidos
                 conexion.Close();
             }
 
-            logger.Info($"Se agregó el pedido de numero {pedido.Numero}");
+            _logger.LogInformation($"Se agregó un pedido.ID del cliente: {pedido.IdCliente}");
 
         }
         catch (SQLiteException exDB)
         {
-            logger.Debug("Hubo un error, no se pudo cargar la información de un pedido. Excepción: " + exDB.ToString());
+            _logger.LogDebug("Hubo un error, no se pudo cargar la información de un pedido. Excepción: " + exDB.ToString());
             throw new Exception("Hubo un error, no se pudo cargar la información del pedido.", exDB);
         }
         catch (Exception ex)
         {
-            logger.Debug("Hubo un error al conectar a la base de datos (para cargar datos de un pedido). Excepción: " + ex.ToString());
+            _logger.LogDebug("Hubo un error al conectar a la base de datos (para cargar datos de un pedido). Excepción: " + ex.ToString());
             throw new Exception("Hubo un error al conectar a la base de datos.", ex);
         }
         
@@ -286,17 +285,17 @@ public class RepositorioPedidos : IRepositorioPedidos
                 conexion.Close();
             }
 
-            logger.Info($"Se eliminó el pedido de número {numPedido}");
+            _logger.LogInformation($"Se eliminó el pedido de número {numPedido}");
 
         }
         catch (SQLiteException exDB)
         {
-            logger.Debug($"Hubo un error, no se pudo eliminar el registro de un pedido de número {numPedido}. Excepción: " + exDB.ToString());
+            _logger.LogDebug($"Hubo un error, no se pudo eliminar el registro de un pedido de número {numPedido}. Excepción: " + exDB.ToString());
             throw new Exception("Hubo un error, no se pudo eliminar el registro del pedido.", exDB);
         }
         catch (Exception ex)
         {
-            logger.Debug($"Hubo un error al conectar a la base de datos (para eliminar datos de un pedido de numero {numPedido}). Excepción: " + ex.ToString());
+            _logger.LogDebug($"Hubo un error al conectar a la base de datos (para eliminar datos de un pedido de numero {numPedido}). Excepción: " + ex.ToString());
             throw new Exception("Hubo un error al conectar a la base de datos.", ex);
         }
 
@@ -327,17 +326,17 @@ public class RepositorioPedidos : IRepositorioPedidos
                 conexion.Close();
             }
 
-            logger.Info($"Se modificó la información del pedido de numero {pedidoAModificar.Numero}");
+            _logger.LogInformation($"Se modificó la información del pedido de numero {pedidoAModificar.Numero}");
 
         }
         catch (SQLiteException exDB)
         {
-            logger.Debug($"Hubo un error, no se pudo actualizar la información de un pedido de número {pedidoAModificar.Numero}. Excepción: " + exDB.ToString());
+            _logger.LogDebug($"Hubo un error, no se pudo actualizar la información de un pedido de número {pedidoAModificar.Numero}. Excepción: " + exDB.ToString());
             throw new Exception("Hubo un error, no se pudo actualizar el registro del pedido.", exDB);
         }
         catch (Exception ex)
         {
-            logger.Debug($"Hubo un error al conectar a la base de datos (para actualizar datos de un pedido de número {pedidoAModificar.Numero}). Excepción: " + ex.ToString());
+            _logger.LogDebug($"Hubo un error al conectar a la base de datos (para actualizar datos de un pedido de número {pedidoAModificar.Numero}). Excepción: " + ex.ToString());
             throw new Exception("Hubo un error al conectar a la base de datos.", ex);
         }
 

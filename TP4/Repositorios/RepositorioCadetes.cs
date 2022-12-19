@@ -22,26 +22,19 @@ public class RepositorioCadetes : IRepositorioCadetes
     // readonly para que cadenaConexion sea inmutable
     private readonly IConfiguration _configuration;
     // para usar la cadena de conexión del JSON
-
     private readonly ILogger<RepositorioCadetes> _logger;
     public RepositorioCadetes(IConfiguration configuration, ILogger<RepositorioCadetes> logger)
     {
         this._configuration = configuration;
-        //this.cadenaConexion = "Data Source=DB/PedidosDB.db;Version=3;";
         this.cadenaConexion = this._configuration.GetConnectionString("SQLite");
-        // solo puedo asignar un valor a un atributo readonly en el constructor o en la misma declaración
         // inyección de dependencia (cadenaConexion)
-
         this._logger = logger;
+        // inyección de dependencia (NLog Logger)
     }
-    // private static readonly Logger logger = LogManager.GetCurrentClassLogger();
     public List<Cadete> obtenerCadetes()
     {
-
-        // Para trabajar con DB
         try
         {
-
             List<Cadete> cadetes = new List<Cadete>();
 
             string consulta = "SELECT * FROM Cadete";

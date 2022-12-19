@@ -19,11 +19,14 @@ public class RepositorioUsuarios : IRepositorioUsuarios
     // readonly para que cadenaConexion sea inmutable
     private readonly IConfiguration _configuration;
     // para usar la cadena de conexión del JSON
-    private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-    public RepositorioUsuarios(IConfiguration configuration)
+    private readonly Logger<RepositorioUsuarios> _logger;
+   public RepositorioUsuarios(IConfiguration configuration, Logger<RepositorioUsuarios> logger)
     {
         this._configuration = configuration;
         this.cadenaConexion = this._configuration.GetConnectionString("SQLite");
+        // inyección de dependencia (cadenaConexion)
+        this._logger = logger;
+        // inyección de dependencia (NLog Logger)
     }
 
     /*
