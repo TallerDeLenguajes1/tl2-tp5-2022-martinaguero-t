@@ -43,22 +43,21 @@ h1 {
 }
 
 .nav-item a {
-  background-color: rgb(236, 191, 93);
+  background-color: rgb(255, 174, 0);
   padding:0.6rem;
   border-radius:0.3rem;
   transition-duration: 0.3s;
 }
 
-.nav-item:last-child{
-  background-color:rgb(164, 39, 39);
-  color:white;
-}
+
 
 .nav-sesioniniciada {
   display:block;
   padding:0.4rem;
   border-radius:0.3rem;
   margin-right:0 !important;
+  background-color:rgb(127, 41, 41);
+  color:white;
 }
 
 .nav-sesioniniciada a, .nav-sesioniniciada p {
@@ -68,6 +67,7 @@ h1 {
 
 .nav-sesioniniciada a {
   color:rgb(127, 41, 41) !important;
+  font-weight:bold;
 }
 
 

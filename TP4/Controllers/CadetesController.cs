@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Net;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TP4.Models;
 using TP4.ViewModels;
@@ -27,6 +28,9 @@ public class CadetesController : Controller
 
         try
         {
+            // Control de usuario logueado.
+            if(HttpContext.Session.GetString("rolUsuario") == null) return RedirectToAction("Index","Home");
+
             // método que traiga cadetes
             var cadetes = _repCadetes.obtenerCadetes();
 
@@ -47,6 +51,11 @@ public class CadetesController : Controller
     
     [HttpGet]   
     public IActionResult cargarCadete(){
+
+        // Control de logueo y de que el usuario sea solo Administrador.
+        string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+        if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
+
         return View(new CadeteViewModel());
     }   
 
@@ -54,6 +63,12 @@ public class CadetesController : Controller
     public IActionResult cargarCadetePost(CadeteViewModel cadeteViewModel){
 
         try{
+
+            // Es necesario el control de sesión aquí?
+
+            // Control de logueo y de que el usuario sea solo Administrador.
+            string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+            if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
 
             if(ModelState.IsValid){
                 var cadete = _mapper.Map<Cadete>(cadeteViewModel);
@@ -74,7 +89,11 @@ public class CadetesController : Controller
     public IActionResult modificarCadete(int id){
         
         try
-        {
+        {   
+            // Control de logueo y de que el usuario sea solo Administrador.
+            string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+            if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
+            
             Cadete? cadeteBuscado = _repCadetes.buscarCadetePorID(id);
 
             if(cadeteBuscado != null){
@@ -98,7 +117,10 @@ public class CadetesController : Controller
 
         try
         {
-            
+
+            string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+            if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");   
+
             if(ModelState.IsValid){
                 var cadete = _mapper.Map<Cadete>(cadeteViewModel);
                 _repCadetes.modificarCadete(cadete);
@@ -121,7 +143,10 @@ public class CadetesController : Controller
     public IActionResult eliminarCadete(int ID){
 
         try
-        {
+        {   
+            string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+            if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");   
+
             _repCadetes.eliminarCadete(ID);
             return RedirectToAction("listarCadetes");
         }

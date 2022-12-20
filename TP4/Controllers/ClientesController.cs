@@ -23,6 +23,8 @@ public class ClientesController : Controller
 
         try
         {
+            if(HttpContext.Session.GetString("rolUsuario") == null) return RedirectToAction("Index","Home");
+
             var clientes = _repClientes.obtenerClientes();
 
             // mapear
@@ -41,6 +43,8 @@ public class ClientesController : Controller
     
     [HttpGet]   
     public IActionResult cargarCliente(){
+        string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+        if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
         return View(new ClienteViewModel());
     }   
 
@@ -48,6 +52,9 @@ public class ClientesController : Controller
     public IActionResult cargarClientePost(ClienteViewModel clienteViewModel){
 
         try{
+            
+            string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+            if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
 
             if(ModelState.IsValid){
                 var cliente = _mapper.Map<Cliente>(clienteViewModel);
@@ -68,6 +75,9 @@ public class ClientesController : Controller
         
         try
         {
+            string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+            if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
+
             var clienteBuscado = _repClientes.buscarClientePorID(id);
 
             if(clienteBuscado != null){
@@ -89,7 +99,9 @@ public class ClientesController : Controller
 
         try
         {
-            
+            string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+            if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
+
             if(ModelState.IsValid){
                 var cliente = _mapper.Map<Cliente>(clienteViewModel);
                 _repClientes.modificarCliente(cliente);
@@ -112,6 +124,9 @@ public class ClientesController : Controller
 
         try
         {
+            string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+            if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
+
             _repClientes.eliminarCliente(ID);
             return RedirectToAction("listarClientes");
         }

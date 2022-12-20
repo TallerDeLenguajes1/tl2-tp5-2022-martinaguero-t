@@ -27,6 +27,8 @@ namespace TP4.Controllers
         public IActionResult listarPedidos(){
             try
             {
+                if(HttpContext.Session.GetString("rolUsuario") == null) return RedirectToAction("Index","Home");
+
                 var pedidos = _repPedidos.obtenerPedidos();
                 var pedidosViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
                 return View(pedidosViewModel);
@@ -44,6 +46,9 @@ namespace TP4.Controllers
             
             try
             {
+                string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+                if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
+
                 var cadetes = _repCadetes.obtenerCadetes();
                 var clientes = _repClientes.obtenerClientes();
 
@@ -70,6 +75,9 @@ namespace TP4.Controllers
 
             try
             {
+                string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+                if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
+
                 if(ModelState.IsValid){
                     var pedido = _mapper.Map<Pedido>(pedidosCadetesClientesViewModel);
                     _repPedidos.agregarPedido(pedido);
@@ -92,6 +100,9 @@ namespace TP4.Controllers
 
             try
             {
+                string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+                if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
+
                 _repPedidos.eliminarPedido(numPedido);
                 return RedirectToAction("listarPedidos");
             }
@@ -105,6 +116,9 @@ namespace TP4.Controllers
 
             try
             {
+                string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+                if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
+
                 var pedido = _repPedidos.buscarPedidoPorNumero(numPedido);
 
                 if(pedido != null){
@@ -129,6 +143,9 @@ namespace TP4.Controllers
             
             try
             {
+                string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+                if(rolUsuario == null || rolUsuario == "Encargado") return RedirectToAction("Index","Home");
+
                 if(ModelState.IsValid){
                     var pedido = _mapper.Map<Pedido>(pedidosCadetesViewModel);
                     _repPedidos.modificarPedido(pedido);
@@ -148,7 +165,12 @@ namespace TP4.Controllers
         public IActionResult listarPedidosCliente(int idCliente, string nombreCliente){
             try
             {
+                string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+                if(rolUsuario == null) return RedirectToAction("Index","Home");
+
                 var pedidos = _repPedidos.obtenerPedidosCliente(idCliente);
+
+                
                 var pedidosViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
 
                 ListaPedidosClienteViewModel listarPedidosClienteViewModel = new ListaPedidosClienteViewModel(nombreCliente,pedidosViewModel);
@@ -165,6 +187,9 @@ namespace TP4.Controllers
         public IActionResult listarPedidosCadete(int idCadete, string nombreCadete){
             try
             {
+                string rolUsuario = HttpContext.Session.GetString("rolUsuario");
+                if(rolUsuario == null) return RedirectToAction("Index","Home");
+
                 var pedidos = _repPedidos.obtenerPedidosCadete(idCadete);
                 var pedidosViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
 

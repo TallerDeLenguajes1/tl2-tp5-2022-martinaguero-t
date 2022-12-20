@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Listado de clientes";
+    string rolUsuario = Context.Session.GetString("rolUsuario");
 }
 
 <section>
@@ -34,12 +35,14 @@
                             <th>
                                 Mostrar pedidos
                             </th>
-                            <th>
-                                Borrado
-                            </th>
-                            <th>
-                                Modificación
-                            </th>
+                            @if(rolUsuario == "Administrador"){
+                                <th>
+                                    Borrado
+                                </th>
+                                <th>
+                                    Modificación
+                                </th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
@@ -71,19 +74,23 @@
                                     <a title="Listar pedidos del cliente" asp-controller="Pedidos" asp-action="listarPedidosCliente" asp-route-idCliente="@cliente.ID" asp-route-nombreCliente="@cliente.Nombre">Listar</a>
 
                                 </td>
-                                <td>
-                                    <a title="Eliminar información del cliente" asp-controller="Clientes" asp-action="eliminarCliente" asp-route-id="@cliente.ID">Eliminar</a>
-                                </td>
-                                <td>
-                                    <a title="Modificar información del cliente" asp-controller="Clientes" asp-action="modificarCliente" asp-route-id="@cliente.ID">Modificar</a>
-                                </td>
+                                @if(rolUsuario == "Administrador"){
+                                    <td>
+                                        <a title="Eliminar información del cliente" asp-controller="Clientes" asp-action="eliminarCliente" asp-route-id="@cliente.ID">Eliminar</a>
+                                    </td>
+                                    <td>
+                                        <a title="Modificar información del cliente" asp-controller="Clientes" asp-action="modificarCliente" asp-route-id="@cliente.ID">Modificar</a>
+                                    </td>
+                                }
                             </tr>
                         }
                     </tbody>
                 </table>
         </article>
         <article>
-            <p class="extrasListarClientes">Si desea agregar la información de un cliente, <a asp-area="" asp-controller="Clientes" asp-action="cargarCliente">haga click aquí.</a></p>
+            @if(rolUsuario == "Administrador"){
+                <p class="extrasListarClientes">Si desea agregar la información de un cliente, <a asp-area="" asp-controller="Clientes" asp-action="cargarCliente">haga click aquí.</a></p>
+            }
             <p class="extrasListarClientes"> Cantidad de clientes registrados: @Model.contarClientes()</p>
         </article>
     }

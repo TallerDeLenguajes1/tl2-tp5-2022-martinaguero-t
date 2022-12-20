@@ -41,7 +41,7 @@
                                 <a title="Al listado de pedidos" class="nav-link text-dark" asp-area="" asp-controller="Pedidos" asp-action="listarPedidos">Pedidos</a>
                             </li>
                             <li class="nav-item nav-sesion nav-sesioniniciada">
-                                <p>@Context.Session.GetString("nombreUsuario") - @Context.Session.GetString("rolUsuario")</p>
+                                <p><strong></strong>@Context.Session.GetString("nombreUsuario")<strong></strong> - @Context.Session.GetString("rolUsuario")</p>
                                 <a title = "Cerrar sesión" class="nav-link text-dark" asp-area="" asp-controller="Logueo" asp-action="cerrarSesion">Cerrar sesión</a>
                             </li>
                         }

@@ -45,6 +45,9 @@ public class LogueoController : Controller
                 if(usuario.Id != -1){
                     HttpContext.Session.SetString("nombreUsuario",usuario.Username);
                     HttpContext.Session.SetString("rolUsuario",usuario.Rol);
+
+                    _logger.LogInformation($"El usuario de ID {usuario.Id} y username {usuario.Username} ha iniciado sesión.");
+
                     return RedirectToAction("Index","Home");
                 } else {
                     ViewBag.NoEncontrado = "No se encontró el usuario ingresado";
@@ -66,6 +69,7 @@ public class LogueoController : Controller
     }
 
     public IActionResult cerrarSesion(){
+        _logger.LogInformation($"El usuario de username {HttpContext.Session.GetString("nombreUsuario")} ha cerrado sesión.");
         HttpContext.Session.Clear();
         return RedirectToAction("Index","Home");
     }

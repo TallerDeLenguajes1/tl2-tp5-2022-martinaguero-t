@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Listado de pedidos";
+    string rolUsuario = Context.Session.GetString("rolUsuario");
 }
 
 <section>
@@ -26,12 +27,14 @@
                         <th>
                             Estado
                         </th>
-                        <th>
-                            Borrado
-                        </th>
-                        <th>
-                            Modificación
-                        </th>
+                        @if(rolUsuario == "Administrador"){
+                            <th>
+                                Borrado
+                            </th>
+                            <th>
+                                Modificación
+                            </th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -57,19 +60,23 @@
                             } else {
                                 <td>Pendiente</td>
                             }
-                            <td>
-                                <a title="Eliminar pedido" asp-controller="Pedidos" asp-action="eliminarPedido" asp-route-numPedido="@pedido.Numero">Eliminar</a>
-                            </td>
-                            <td>
-                                <a title="Modificar pedido" asp-controller="Pedidos" asp-action="modificarPedido" asp-route-numPedido="@pedido.Numero">Modificar</a>
-                            </td>
+                            @if(rolUsuario == "Administrador"){
+                                <td>
+                                    <a title="Eliminar pedido" asp-controller="Pedidos" asp-action="eliminarPedido" asp-route-numPedido="@pedido.Numero">Eliminar</a>
+                                </td>
+                                <td>
+                                    <a title="Modificar pedido" asp-controller="Pedidos" asp-action="modificarPedido" asp-route-numPedido="@pedido.Numero">Modificar</a>
+                                </td>
+                            }
                         </tr>
                     }
                 </tbody>
             </table>
     </article>
     <article>
-        <p class="extrasListarPedidos">Para registrar un nuevo pedido, <a asp-area="" asp-controller="Pedidos" asp-action="crearPedido">haga click aquí</a>. <strong>Deben haber cadetes y clientes cargados.</strong></p>
+        @if(rolUsuario == "Administrador"){
+            <p class="extrasListarPedidos">Para registrar un nuevo pedido, <a asp-area="" asp-controller="Pedidos" asp-action="crearPedido">haga click aquí</a>. <strong>Deben haber cadetes y clientes cargados.</strong></p>
+        }
     </article>
 </section>
 
