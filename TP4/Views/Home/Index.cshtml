@@ -4,9 +4,14 @@
 
 <div class="text-center">
     <h1 class="display-4">Página principal - Sistema de cadetería</h1>
-    <p>Página principal para el proyecto - Sistema de cadetería</p>
-    @{string nombreUsuario = Context.Session.GetString("nombreUsuario"); }
-    @if(Context.Session.GetInt32("id") != null){
-        <p>¡Bienvenido/a @nombreUsuario!</p>
+    <p>Página principal para el proyecto de Taller de Lenguajes II</p>
+
+    @{
+        string? nombreUsuario = Context.Session.GetString("nombreUsuario"); 
+        if(nombreUsuario != null){
+            <p>¡Bienvenido/a @nombreUsuario!</p>
+        }
     }
+  
+
 </div>

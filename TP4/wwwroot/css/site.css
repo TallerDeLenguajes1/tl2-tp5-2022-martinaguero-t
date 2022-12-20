@@ -15,17 +15,115 @@ html {
 
 body {
   margin-bottom: 60px;
+  font-family: 'M PLUS Rounded 1c';
+  background-color: rgba(255, 244, 225, 0.815);
+}
+
+h1 {
+  margin-top:2.5rem;
+  margin-left: auto;
+  margin-right:auto;
+  font-size:3rem !important;
+  background-color: rgb(255, 170, 0);
+  width:82%;
+  padding:0.6rem;
+  border-radius:0.3rem;
+
+}
+
+
+.navbar {
+  background-color: rgb(251, 223, 164) !important;
+}
+
+.nav-item {
+  background-color: rgb(255, 174, 0);
+  padding:0.2rem;
+  margin-right:0.8rem;
+  border-radius:0.3rem;
+  transition-duration: 0.3s;
+}
+
+.nav-item:last-child{
+  background-color:rgb(164, 39, 39);
+}
+
+.nav-item:last-child a {
+  color:white !important;
+}
+
+@media (min-width: 576px) {
+  .navbar ul > .nav-item:last-of-type {
+   margin-left: auto;
+  }
+}
+
+.nav-item:hover {
+  background-color: rgb(245, 129, 87);
+  transition-duration: 0.3s;
+}
+
+.nav-item:focus {
+  background-color: rgb(245, 129, 87);
+  transition-duration: 0.3s;
+}
+
+@media (max-width: 576px) {
+  .nav-item{
+    margin-top:0.5rem;
+    padding-left:1rem;
+    width:100%;
+  }
+
+}
+
+#alogositio {
+  width:4.7rem;
+  background-color: rgb(245, 129, 87);
+  text-align: center;
+  border-radius:0.3rem;
+}
+
+#logositio {
+  width: 4rem;
+  background-color: rgb(255, 174, 0);
+  padding: 0.5rem;
+  transition-duration: 0.3s;
+  border-radius:0.3rem;
+}
+
+#logositio:hover {
+  transition-duration:0.3s;
+  transform: scale(1.02);
+}
+
+#logositio:focus {
+  transition-duration:0.3s;
+  transform: scale(1.05);
 }
 
 table {
   margin: 0 auto;
   border: 0.05em solid black;
   border-collapse : collapse;
-  width : 60%;
+  width : 80%;
+  background-color: white;
+}
+
+table a {
+  color:rgb(152, 41, 0);
+}
+
+table a:hover {
+  color:rgb(163, 83, 53);
+}
+
+table a:focus {
+  color:rgb(163, 83, 53);
 }
 
 table th {
-  background-color: rgba(159, 242, 214, 0.824);
+  background-color: rgb(254, 220, 149);
 }
 
 table th, table td {
@@ -44,7 +142,7 @@ p {
 }
 
 .extrasListarPedidos, .extrasListarCadetes, .extrasListarClientes {
-  background-color :rgba(159, 242, 214, 0.824);
+  background-color :rgb(254, 220, 149);
   padding: 0.4em;
   margin: 1em auto;
   text-align:center;
@@ -52,7 +150,15 @@ p {
 }
 
 .extrasListarCadetes a, .extrasListarPedidos a, .extrasListarClientes a{
-  color:teal;
+  color:rgb(152, 41, 0);
+}
+
+.extrasListarCadetes a:hover, .extrasListarPedidos a:hover, .extrasListarClientes a:hover{
+  color:rgb(163, 83, 53);
+}
+
+.extrasListarCadetes a:focus, .extrasListarPedidos a:focus, .extrasListarClientes a:focus{
+  color:rgb(163, 83, 53);
 }
 
 form {
@@ -94,4 +200,14 @@ form select {
   display:block;
   width:100%;
   padding:0.2em;
+}
+
+
+footer {
+  background-color: rgb(251, 223, 164) !important;
+
+}
+
+footer div {
+  color:rgb(87, 84, 84);
 }
