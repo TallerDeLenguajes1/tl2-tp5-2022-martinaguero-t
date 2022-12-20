@@ -36,6 +36,9 @@
             <input asp-for="@Model.Numero" value="@Model.Numero" hidden>
             <input asp-for="@Model.IdCliente" value="@Model.IdCliente" hidden>
 
+            <!-- Requerido para correcta validación en backend. No pasa la lista en sí, sino que es necesario para que el modelo recibido en el controlador se considere válido.-->
+            <input asp-for="@Model.Cadetes" value="@Model.Cadetes" hidden>
+
             <input type="submit" value="Cargar">
         </form>
     </article>

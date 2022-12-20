@@ -34,6 +34,10 @@
             </label>
             <span class="form-control" asp-validation-for="@Model.Observaciones" ></span>
 
+            <!-- Requeridos para correcta validación en backend. No pasan la listas en sí, sino que son necesarios para que el modelo recibido en el controlador  se considere válido. -->
+            <input asp-for="@Model.Cadetes" value="@Model.Cadetes" hidden>
+            <input asp-for="@Model.Clientes" value="@Model.Clientes" hidden>
+
             <input type="submit" value="Cargar">
         </form>
     </article>

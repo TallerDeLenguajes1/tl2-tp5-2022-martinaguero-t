@@ -49,11 +49,11 @@ namespace TP4.Controllers
 
                 if(cadetes.Any() && clientes.Any()){
 
-                    PedidosCadetesClientesViewModel pedidosCadetesClientes = new PedidosCadetesClientesViewModel();
-                    pedidosCadetesClientes.Cadetes = _mapper.Map<List<CadeteViewModel>>(cadetes);
-                    pedidosCadetesClientes.Clientes = _mapper.Map<List<ClienteViewModel>>(clientes);
+                    PedidosCadetesClientesViewModel pedidosCadetesClientesViewModel = new PedidosCadetesClientesViewModel();
+                    pedidosCadetesClientesViewModel.Cadetes = _mapper.Map<List<CadeteViewModel>>(cadetes);
+                    pedidosCadetesClientesViewModel.Clientes = _mapper.Map<List<ClienteViewModel>>(clientes);
                     
-                    return View(pedidosCadetesClientes);
+                    return View(pedidosCadetesClientesViewModel);
 
                 } else {
                     return RedirectToAction("listarPedidos");
@@ -66,17 +66,18 @@ namespace TP4.Controllers
         }   
 
         [HttpPost]
-        public IActionResult crearPedidoPost(PedidoViewModel pedidoViewModel){
+        public IActionResult crearPedidoPost(PedidosCadetesClientesViewModel pedidosCadetesClientesViewModel){
 
             try
             {
                 if(ModelState.IsValid){
-                    var pedido = _mapper.Map<Pedido>(pedidoViewModel);
+                    var pedido = _mapper.Map<Pedido>(pedidosCadetesClientesViewModel);
                     _repPedidos.agregarPedido(pedido);
                     return RedirectToAction("listarPedidos");
                 } 
 
-                return View("crearPedido", pedidoViewModel);
+                return RedirectToAction("listarPedidos"); 
+                // Si el modelo no es válido, redirige al listado de pedidos.
                 
             }
             catch (System.Exception)
@@ -108,10 +109,10 @@ namespace TP4.Controllers
 
                 if(pedido != null){
 
-                    PedidosCadetesViewModel pedidosCadetes = _mapper.Map<PedidosCadetesViewModel>(pedido);
-                    pedidosCadetes.Cadetes = _mapper.Map<List<CadeteViewModel>>(_repCadetes.obtenerCadetes());
+                    PedidosCadetesViewModel pedidosCadetesViewModel = _mapper.Map<PedidosCadetesViewModel>(pedido);
+                    pedidosCadetesViewModel.Cadetes = _mapper.Map<List<CadeteViewModel>>(_repCadetes.obtenerCadetes());
 
-                    return View(pedidosCadetes);
+                    return View(pedidosCadetesViewModel);
 
                 } else{ 
                     return RedirectToAction("listarPedidos");
@@ -124,17 +125,18 @@ namespace TP4.Controllers
         }
 
         [HttpPost]
-        public IActionResult modificarPedidoPost(PedidoViewModel pedidoViewModel){
+        public IActionResult modificarPedidoPost(PedidosCadetesViewModel pedidosCadetesViewModel){
             
             try
             {
                 if(ModelState.IsValid){
-                    var pedido = _mapper.Map<Pedido>(pedidoViewModel);
+                    var pedido = _mapper.Map<Pedido>(pedidosCadetesViewModel);
                     _repPedidos.modificarPedido(pedido);
                     return RedirectToAction("listarPedidos");
                 }
 
-                return View("modificarPedido",pedidoViewModel);
+                return RedirectToAction("listarPedidos"); 
+                // Si el modelo no es válido, redirige al listado de pedidos.
             }
             catch (System.Exception)
             {
@@ -149,14 +151,13 @@ namespace TP4.Controllers
                 var pedidos = _repPedidos.obtenerPedidosCliente(idCliente);
                 var pedidosViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
 
-                ListaPedidosClienteViewModel listaPedidosClienteViewModel = new ListaPedidosClienteViewModel(nombreCliente,pedidosViewModel);
-
-                return View(listaPedidosClienteViewModel);
+                ListaPedidosClienteViewModel listarPedidosClienteViewModel = new ListaPedidosClienteViewModel(nombreCliente,pedidosViewModel);
+                return View(listarPedidosClienteViewModel);
             }
             catch (System.Exception ex)
             {
                 ViewBag.Error = ex.Message; 
-                return View(new ListaPedidosCadeteViewModel());
+                return View(new ListaPedidosClienteViewModel());
             }
         }
 
@@ -167,9 +168,9 @@ namespace TP4.Controllers
                 var pedidos = _repPedidos.obtenerPedidosCadete(idCadete);
                 var pedidosViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
 
-                ListaPedidosCadeteViewModel listaPedidosCadeteViewModel = new ListaPedidosCadeteViewModel(nombreCadete,pedidosViewModel);
+                ListaPedidosCadeteViewModel listarPedidosCadeteViewModel = new ListaPedidosCadeteViewModel(nombreCadete,pedidosViewModel);
 
-                return View(listaPedidosCadeteViewModel);
+                return View(listarPedidosCadeteViewModel);
             }
             catch (System.Exception ex)
             {

@@ -15,10 +15,10 @@
                             Número
                         </th>
                         <th>
-                            ID del cliente
+                            Cliente
                         </th>
                         <th>
-                            ID del cadete
+                            Cadete
                         </th>
                         <th>
                             Observaciones
@@ -42,10 +42,10 @@
                                 @pedido.Numero
                             </td>
                             <td>
-                                @pedido.IdCliente
+                                @pedido.NombreCliente - ID @pedido.IdCliente
                             </td>
                             <td>
-                                @pedido.IdCadete
+                                @pedido.NombreCadete - ID @pedido.IdCadete
                             </td>
                             @if(pedido.Observaciones!=null){
                                 <td>@pedido.Observaciones</td>
@@ -70,7 +70,6 @@
     </article>
     <article>
         <p class="extrasListarPedidos">Para registrar un nuevo pedido, <a asp-area="" asp-controller="Pedidos" asp-action="crearPedido">haga click aquí</a>. <strong>Deben haber cadetes y clientes cargados.</strong></p>
-        <p></p>
     </article>
 </section>
 

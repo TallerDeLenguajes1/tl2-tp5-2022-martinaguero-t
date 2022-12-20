@@ -14,5 +14,13 @@ public class ListaPedidosCadeteViewModel {
         this.nombreCadete = "";
         this.pedidosCadete = new List<PedidoViewModel>();
     }
+
+    public int cantidadPedidosEntregados(){
+        return pedidosCadete.Count(pedido => pedido.EstaRealizado);
+    }
+
+    public double jornalAPagar(){
+        return cantidadPedidosEntregados()*300;
+    }
 }
 

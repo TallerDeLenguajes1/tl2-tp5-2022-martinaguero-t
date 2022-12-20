@@ -15,7 +15,7 @@
                             Número
                         </th>
                         <th>
-                            ID del cliente
+                            Cliente
                         </th>
                         <th>
                             Observaciones
@@ -33,7 +33,7 @@
                                 @pedido.Numero
                             </td>
                             <td>
-                                @pedido.IdCliente
+                                @pedido.NombreCliente - ID @pedido.IdCliente
                             </td>
                             @if(pedido.Observaciones!=null){
                                 <td>@pedido.Observaciones</td>
@@ -49,6 +49,7 @@
                     }
                 </tbody>
             </table>
+            <p class="extrasListarPedidos">Cantidad de pedidos entregados por el/la cadete: @Model.cantidadPedidosEntregados() - <strong>Jornal a pagar: $@Model.jornalAPagar()</strong></p>
     </article>
 </section>
 

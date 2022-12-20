@@ -15,5 +15,9 @@ public class ListaPedidosClienteViewModel {
         this.nombreCliente = "";
         this.pedidosCliente = new List<PedidoViewModel>();
     }
+
+    public int cantidadPedidosSinRecibir(){
+        return pedidosCliente.Count(pedido => !pedido.EstaRealizado);
+    }
 }
 

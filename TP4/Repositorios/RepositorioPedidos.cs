@@ -42,7 +42,7 @@ public class RepositorioPedidos : IRepositorioPedidos
         {
             List<Pedido> pedidos = new List<Pedido>();
 
-            string consulta = "SELECT * FROM Pedido";
+            string consulta = "SELECT numero, observaciones, esta_realizado, id_cadete, id_cliente, Cadete.nombre, Cliente.nombre FROM Pedido INNER JOIN Cadete ON (id_cadete = Cadete.id) INNER JOIN Cliente ON (id_cliente = Cliente.id)";
 
             using (SQLiteConnection conexion = new SQLiteConnection(cadenaConexion))
             {
@@ -57,7 +57,7 @@ public class RepositorioPedidos : IRepositorioPedidos
                     while (reader.Read())
                     {
                         pedidos.Add(
-                        new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4)));
+                        new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4), reader[5].ToString(),reader[6].ToString()));
                     }
 
                 }
@@ -134,7 +134,7 @@ public class RepositorioPedidos : IRepositorioPedidos
         {
             List<Pedido> pedidos = new List<Pedido>();
 
-            string consulta = "SELECT * FROM Pedido WHERE id_cliente = @idCliente";
+            string consulta = "SELECT numero, observaciones, esta_realizado, id_cadete, id_cliente, Cadete.nombre, Cliente.nombre FROM Pedido INNER JOIN Cadete ON (id_cadete = Cadete.id) INNER JOIN Cliente ON (id_cliente = Cliente.id) WHERE id_cliente = @idCliente";
 
             using (SQLiteConnection conexion = new SQLiteConnection(cadenaConexion))
             {
@@ -150,8 +150,7 @@ public class RepositorioPedidos : IRepositorioPedidos
                     while (reader.Read())
                     {
                         pedidos.Add(
-                        new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4))
-                        );
+                        new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4), reader[5].ToString(), reader[6].ToString()));
                     }
 
                 }
@@ -182,7 +181,7 @@ public class RepositorioPedidos : IRepositorioPedidos
         {
             List<Pedido> pedidos = new List<Pedido>();
 
-            string consulta = "SELECT * FROM Pedido WHERE id_cadete = @idCadete";
+            string consulta = "SELECT numero, observaciones, esta_realizado, id_cadete, id_cliente, Cadete.nombre, Cliente.nombre FROM Pedido INNER JOIN Cadete ON (id_cadete = Cadete.id) INNER JOIN Cliente ON (id_cliente = Cliente.id) WHERE id_cadete = @idCadete";
 
             using (SQLiteConnection conexion = new SQLiteConnection(cadenaConexion))
             {
@@ -198,7 +197,7 @@ public class RepositorioPedidos : IRepositorioPedidos
                     while (reader.Read())
                     {
                         pedidos.Add(
-                        new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4))
+                        new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4), reader[5].ToString(), reader[6].ToString())
                         );
                     }
 

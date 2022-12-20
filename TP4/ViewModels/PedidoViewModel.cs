@@ -5,8 +5,10 @@ public class PedidoViewModel {
     public string? observaciones;
     private bool estaRealizado;
     private int idCadete;
+    private string? nombreCadete;
     private int idCliente;
-
+    private string? nombreCliente;
+    
     public int Numero { get => numero; set => numero = value; }
     
     [Required(ErrorMessage = "Seleccione un estado válido.")]
@@ -22,6 +24,7 @@ public class PedidoViewModel {
     [Display(Name = "ID del Cliente")]
     [Required(ErrorMessage = "Seleccione un cliente.")] 
     public int IdCliente { get => idCliente; set => idCliente = value; }
-
+    public string NombreCadete { get => nombreCadete; set => nombreCadete = value; }
+    public string NombreCliente { get => nombreCliente; set => nombreCliente = value; }
 }
 

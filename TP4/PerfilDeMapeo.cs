@@ -8,14 +8,5 @@ public class PerfilDeMapeo : Profile {
         CreateMap<Cliente, ClienteViewModel>().ReverseMap();
         CreateMap<Pedido, PedidosCadetesClientesViewModel>().ReverseMap(); 
         CreateMap<Pedido, PedidosCadetesViewModel>().ReverseMap(); 
-
-        
-        // CreateMap<List<Cadete>,List<CadeteViewModel>>().ReverseMap();
-        /* (???)
-        CreateMap<List<Cadete>, ListaCadeteViewModel>().ForMember(
-            dest => dest.listaCadetesViewModel,
-            opt => opt.MapFrom(src => )
-        ); 
-        */
     }
 }

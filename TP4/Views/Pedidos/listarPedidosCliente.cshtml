@@ -15,7 +15,7 @@
                             Número
                         </th>
                         <th>
-                            ID del cadete
+                            Cadete
                         </th>
                         <th>
                             Observaciones
@@ -39,7 +39,7 @@
                                 @pedido.Numero
                             </td>
                             <td>
-                                @pedido.IdCadete
+                                @pedido.NombreCadete - ID @pedido.IdCadete
                             </td>
                             @if(pedido.Observaciones!=null){
                                 <td>@pedido.Observaciones</td>
@@ -61,6 +61,7 @@
                     }
                 </tbody>
             </table>
+            <p class="extrasListarPedidos">Cantidad de pedidos que el/la cliente aún no recibió: @Model.cantidadPedidosSinRecibir()</p>
     </article>
 </section>
 
