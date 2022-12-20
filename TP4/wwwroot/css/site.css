@@ -37,42 +37,67 @@ h1 {
 }
 
 .nav-item {
-  background-color: rgb(255, 174, 0);
-  padding:0.2rem;
-  margin-right:0.8rem;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.nav-item a {
+  background-color: rgb(236, 191, 93);
+  padding:0.6rem;
   border-radius:0.3rem;
   transition-duration: 0.3s;
 }
 
 .nav-item:last-child{
   background-color:rgb(164, 39, 39);
+  color:white;
 }
 
-.nav-item:last-child a {
-  color:white !important;
+.nav-sesioniniciada {
+  display:block;
+  padding:0.4rem;
+  border-radius:0.3rem;
+  margin-right:0 !important;
 }
+
+.nav-sesioniniciada a, .nav-sesioniniciada p {
+  padding:0.3rem !important;
+  margin:0;
+}
+
+.nav-sesioniniciada a {
+  color:rgb(127, 41, 41) !important;
+}
+
 
 @media (min-width: 576px) {
   .navbar ul > .nav-item:last-of-type {
    margin-left: auto;
   }
+  .nav-item{
+    margin-right:0.8rem;
+  }
 }
 
-.nav-item:hover {
+.nav-item a:hover {
   background-color: rgb(245, 129, 87);
   transition-duration: 0.3s;
 }
 
-.nav-item:focus {
+.nav-item a:focus {
   background-color: rgb(245, 129, 87);
   transition-duration: 0.3s;
 }
 
 @media (max-width: 576px) {
-  .nav-item{
+  .nav-item a{
     margin-top:0.5rem;
-    padding-left:1rem;
+    padding-left:0.8rem !important;
     width:100%;
+  }
+  .nav-sesioniniciada {
+    margin-top:0.5rem;
   }
 
 }
@@ -141,7 +166,7 @@ p {
   border-radius: 0.2em;
 }
 
-.extrasListarPedidos, .extrasListarCadetes, .extrasListarClientes {
+.extrasListarPedidos, .extrasListarCadetes, .extrasListarClientes, #usuarioNoEncontrado{
   background-color :rgb(254, 220, 149);
   padding: 0.4em;
   margin: 1em auto;

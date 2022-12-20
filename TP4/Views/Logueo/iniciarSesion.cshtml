@@ -1,0 +1,30 @@
+@model TP4.ViewModels.LoginUsuarioViewModel
+@{
+    ViewBag.Title = "Iniciar sesión";
+}
+
+<section>
+    <h1 class="text-center">Iniciar sesión</h1>
+    <article>
+        <form asp-controller="Logueo" asp-action="iniciarSesionPost" method="post">
+
+            <label asp-for="@Model.Username"> @Html.DisplayNameFor(Model => Model.Username)
+                <input asp-for="@Model.Username" type="text">
+            </label>
+            <span class="form-control" asp-validation-for="@Model.Username" ></span>
+
+            <label asp-for="@Model.Contrasena"> @Html.DisplayNameFor(Model => Model.Contrasena) 
+                @Html.EditorFor(model => model.Contrasena)
+            </label>
+            <span class="form-control" asp-validation-for="@Model.Contrasena" ></span>
+
+            <input type="submit" value="Ingresar">
+        </form>
+        @if(ViewBag.NoEncontrado != null){
+            <p id="usuarioNoEncontrado">@ViewBag.NoEncontrado</p>
+        }
+    </article>
+    
+</section>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> } 

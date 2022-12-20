@@ -24,24 +24,25 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a title="Al listado de cadetes" class="nav-link text-dark" asp-area="" asp-controller="Cadetes" asp-action="listarCadetes">Cadetes</a>
-                        </li>
-                        <li title="Al listado de clientes" class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="listarClientes">Clientes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a title="Al listado de pedidos" class="nav-link text-dark" asp-area="" asp-controller="Pedidos" asp-action="listarPedidos">Pedidos</a>
-                        </li>
 
                         <!-- Enlace para inicio de sesión / cerrar sesión -->
-                        @if(Context.Session.GetInt32("id") == null){
+                        @if(Context.Session.GetString("nombreUsuario") == null){
                             <li class="nav-item nav-sesion">
-                                <a title="Iniciar sesión" class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Iniciar sesión</a>
+                                <a title="Iniciar sesión" class="nav-link text-dark" asp-area="" asp-controller="Logueo" asp-action="iniciarSesion">Iniciar sesión</a>
                             </li>
                         } else {
-                            <li class="nav-item nav-sesion">
-                                <a title = "Cerrar sesión" class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Cerrar sesión</a>
+                            <li class="nav-item">
+                                <a title="Al listado de cadetes" class="nav-link text-dark" asp-area="" asp-controller="Cadetes" asp-action="listarCadetes">Cadetes</a>
+                            </li>
+                            <li title="Al listado de clientes" class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="listarClientes">Clientes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a title="Al listado de pedidos" class="nav-link text-dark" asp-area="" asp-controller="Pedidos" asp-action="listarPedidos">Pedidos</a>
+                            </li>
+                            <li class="nav-item nav-sesion nav-sesioniniciada">
+                                <p>@Context.Session.GetString("nombreUsuario") - @Context.Session.GetString("rolUsuario")</p>
+                                <a title = "Cerrar sesión" class="nav-link text-dark" asp-area="" asp-controller="Logueo" asp-action="cerrarSesion">Cerrar sesión</a>
                             </li>
                         }
 

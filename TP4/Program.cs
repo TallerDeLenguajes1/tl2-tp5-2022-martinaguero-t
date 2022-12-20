@@ -16,10 +16,11 @@ builder.Services.AddControllersWithViews();
 // Para AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
 
-// Para repositorio de cadetes (inyección de dependencia para el repositorio de cadetes)
+// Inyección de dependencias para los repositorios creados
 builder.Services.AddTransient<IRepositorioCadetes, RepositorioCadetes>();
 builder.Services.AddTransient<IRepositorioClientes, RepositorioClientes>();
 builder.Services.AddTransient<IRepositorioPedidos, RepositorioPedidos>();
+builder.Services.AddTransient<IRepositorioUsuarios, RepositorioUsuarios>();
 
 // Para trabajar con session
 builder.Services.AddDistributedMemoryCache();
