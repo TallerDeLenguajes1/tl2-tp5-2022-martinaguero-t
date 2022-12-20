@@ -68,13 +68,14 @@
                                     </td>
                                 }
                                 <td>
-                                    @Html.ActionLink("Listar","listarPedidosCliente","Pedidos", new {idCliente = cliente.ID})
+                                    <a title="Listar pedidos del cliente" asp-controller="Pedidos" asp-action="listarPedidosCliente" asp-route-idCliente="@cliente.ID" asp-route-nombreCliente="@cliente.Nombre">Listar</a>
+
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Eliminar","eliminarCliente","Clientes", new {id = cliente.ID})
+                                    <a title="Eliminar información del cliente" asp-controller="Clientes" asp-action="eliminarCliente" asp-route-id="@cliente.ID">Eliminar</a>
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Modificar","modificarCliente","Clientes", new {id = cliente.ID})
+                                    <a title="Modificar información del cliente" asp-controller="Clientes" asp-action="modificarCliente" asp-route-id="@cliente.ID">Modificar</a>
                                 </td>
                             </tr>
                         }
@@ -83,7 +84,7 @@
         </article>
         <article>
             <p class="extrasListarClientes">Si desea agregar la información de un cliente, <a asp-area="" asp-controller="Clientes" asp-action="cargarCliente">haga click aquí.</a></p>
-            <p class="extrasListarClientes"> Cantidad de clientes registrados: @Model.contarCadetes()</p>
+            <p class="extrasListarClientes"> Cantidad de clientes registrados: @Model.contarClientes()</p>
         </article>
     }
 </section>

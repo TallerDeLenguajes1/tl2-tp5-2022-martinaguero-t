@@ -1,4 +1,4 @@
-@model List<TP4.ViewModels.PedidoViewModel>
+@model TP4.ViewModels.ListaPedidosClienteViewModel
 
 @{
     ViewBag.Title = "Listado de pedidos";
@@ -7,7 +7,7 @@
 <section>
     <h1 class="text-center">Listado de pedidos del cliente</h1>
     <article class="text-center">
-        <p>Pedidos encontrados:</p>
+        <p>Pedidos encontrados correspondientes al cliente @Model.nombreCliente:</p>
             <table>
                 <thead>
                     <tr>
@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var pedido in Model)
+                    @foreach (var pedido in Model.pedidosCliente)
                     {
                         <tr>
                             <td>
@@ -52,10 +52,10 @@
                                 <td>Pendiente</td>
                             }
                             <td>
-                                @Html.ActionLink("Eliminar","eliminarPedido","Pedidos", new {numPedido = pedido.Numero})
+                                <a title="Eliminar pedido" asp-controller="Pedidos" asp-action="eliminarPedido" asp-route-numPedido="@pedido.Numero">Eliminar</a>
                             </td>
                             <td>
-                                @Html.ActionLink("Modificar","modificarPedido","Pedidos", new {numPedido = pedido.Numero})
+                                <a title="Modificar pedido" asp-controller="Pedidos" asp-action="modificarPedido" asp-route-numPedido="@pedido.Numero">Modificar</a>
                             </td>
                         </tr>
                     }

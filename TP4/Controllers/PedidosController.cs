@@ -143,32 +143,38 @@ namespace TP4.Controllers
         }
 
         [HttpGet]
-        public IActionResult listarPedidosCliente(int idCliente){
+        public IActionResult listarPedidosCliente(int idCliente, string nombreCliente){
             try
             {
                 var pedidos = _repPedidos.obtenerPedidosCliente(idCliente);
                 var pedidosViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
-                return View(pedidosViewModel);
+
+                ListaPedidosClienteViewModel listaPedidosClienteViewModel = new ListaPedidosClienteViewModel(nombreCliente,pedidosViewModel);
+
+                return View(listaPedidosClienteViewModel);
             }
             catch (System.Exception ex)
             {
                 ViewBag.Error = ex.Message; 
-                return View(new List<PedidoViewModel>());
+                return View(new ListaPedidosCadeteViewModel());
             }
         }
 
         [HttpGet]
-        public IActionResult listarPedidosCadete(int idCadete){
+        public IActionResult listarPedidosCadete(int idCadete, string nombreCadete){
             try
             {
                 var pedidos = _repPedidos.obtenerPedidosCadete(idCadete);
                 var pedidosViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
-                return View(pedidosViewModel);
+
+                ListaPedidosCadeteViewModel listaPedidosCadeteViewModel = new ListaPedidosCadeteViewModel(nombreCadete,pedidosViewModel);
+
+                return View(listaPedidosCadeteViewModel);
             }
             catch (System.Exception ex)
             {
                 ViewBag.Error = ex.Message; 
-                return View(new List<PedidoViewModel>());
+                return View(new ListaPedidosCadeteViewModel());
             }
         }
 

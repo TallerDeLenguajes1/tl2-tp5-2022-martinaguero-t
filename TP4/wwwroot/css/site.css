@@ -162,10 +162,10 @@ p {
 }
 
 form {
-  background-color:azure;
+  background-color:rgb(254, 220, 149);
   padding:1em;
   border-radius:0.5em;
-  border: 0.01em solid teal;
+  border: 0.01em solid rgb(163, 83, 53);
   margin: 1em auto;
   width:60%;
 }
@@ -191,9 +191,9 @@ form input[type="submit"]:hover {
 }
 
 .form-control {
-  background-color: azure !important;
+  background-color: rgb(254, 220, 149) !important;
   border: none !important;
-  color:teal;
+  color:rgb(163, 83, 53);
 }
 
 form select {
@@ -202,6 +202,14 @@ form select {
   padding:0.2em;
 }
 
+form #estadopedido {
+  display:flex !important;
+}
+
+form #estadopedido input {
+  width:1rem !important;
+  margin-left:0.5rem !important;
+}
 
 footer {
   background-color: rgb(251, 223, 164) !important;

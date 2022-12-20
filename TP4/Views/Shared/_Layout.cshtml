@@ -15,7 +15,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a id="alogositio" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <a title="Página principal" id="alogositio" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img id="logositio" src="~/img/logocadeteria.png" alt="Logo de la cadetería que muestra a un cadete en moto">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -24,26 +24,24 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-
-                        
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cadetes" asp-action="listarCadetes">Cadetes</a>
+                            <a title="Al listado de cadetes" class="nav-link text-dark" asp-area="" asp-controller="Cadetes" asp-action="listarCadetes">Cadetes</a>
                         </li>
-                        <li class="nav-item">
+                        <li title="Al listado de clientes" class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="listarClientes">Clientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Pedidos" asp-action="listarPedidos">Pedidos</a>
+                            <a title="Al listado de pedidos" class="nav-link text-dark" asp-area="" asp-controller="Pedidos" asp-action="listarPedidos">Pedidos</a>
                         </li>
 
                         <!-- Enlace para inicio de sesión / cerrar sesión -->
                         @if(Context.Session.GetInt32("id") == null){
                             <li class="nav-item nav-sesion">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Iniciar sesión</a>
+                                <a title="Iniciar sesión" class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Iniciar sesión</a>
                             </li>
                         } else {
                             <li class="nav-item nav-sesion">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Cerrar sesión</a>
+                                <a title = "Cerrar sesión" class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Cerrar sesión</a>
                             </li>
                         }
 

@@ -28,13 +28,13 @@
             </label>
             <span class="form-control" asp-validation-for="@Model.Observaciones" ></span>
 
-            <label asp-for="@Model.EstaRealizado"> ¿Pedido realizado?
+            <label id="estadopedido" asp-for="@Model.EstaRealizado"> ¿Pedido realizado?
                 <input asp-for="@Model.EstaRealizado">
             </label>
             <span class="form-control" asp-validation-for="@Model.EstaRealizado" ></span>
 
-            @Html.HiddenFor(model => model.Numero)
-            @Html.HiddenFor(model => model.IdCliente)
+            <input asp-for="@Model.Numero" value="@Model.Numero" hidden>
+            <input asp-for="@Model.IdCliente" value="@Model.IdCliente" hidden>
 
             <input type="submit" value="Cargar">
         </form>

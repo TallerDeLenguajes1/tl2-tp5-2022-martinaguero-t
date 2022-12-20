@@ -6,8 +6,7 @@ public class ListaClienteViewModel {
     public ListaClienteViewModel(List<ClienteViewModel> listaClientesViewModel){
         this.listaClientesViewModel = listaClientesViewModel;
     }
-
-    public int contarCadetes(){
+    public int contarClientes(){
         return listaClientesViewModel.Count();
     }
 

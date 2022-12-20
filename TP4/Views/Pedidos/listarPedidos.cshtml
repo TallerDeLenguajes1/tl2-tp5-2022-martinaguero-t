@@ -58,10 +58,10 @@
                                 <td>Pendiente</td>
                             }
                             <td>
-                                @Html.ActionLink("Eliminar","eliminarPedido","Pedidos", new {numPedido = pedido.Numero})
+                                <a title="Eliminar pedido" asp-controller="Pedidos" asp-action="eliminarPedido" asp-route-numPedido="@pedido.Numero">Eliminar</a>
                             </td>
                             <td>
-                                @Html.ActionLink("Modificar","modificarPedido","Pedidos", new {numPedido = pedido.Numero})
+                                <a title="Modificar pedido" asp-controller="Pedidos" asp-action="modificarPedido" asp-route-numPedido="@pedido.Numero">Modificar</a>
                             </td>
                         </tr>
                     }
