@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Cadetería</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TP4.styles.css" asp-append-version="true" />
@@ -41,8 +45,13 @@
                                 <a title="Al listado de pedidos" class="nav-link text-dark" asp-area="" asp-controller="Pedidos" asp-action="listarPedidos">Pedidos</a>
                             </li>
                             <li class="nav-item nav-sesion nav-sesioniniciada">
-                                <p><strong></strong>@Context.Session.GetString("nombreUsuario")<strong></strong> - @Context.Session.GetString("rolUsuario")</p>
-                                <a title = "Cerrar sesión" class="nav-link text-dark" asp-area="" asp-controller="Logueo" asp-action="cerrarSesion">Cerrar sesión</a>
+                                <section>
+                                    <p><strong></strong>@Context.Session.GetString("nombreUsuario")<strong></strong> - @Context.Session.GetString("rolUsuario")</p>
+                                    <a title = "Cerrar sesión" class="nav-link text-dark" asp-area="" asp-controller="Logueo" asp-action="cerrarSesion">Cerrar sesión</a>
+                                </section>
+                                <section id="fotoperfil">
+                                    <img src="~/img/profilepics/@Context.Session.GetString("fotoPerfilUsuario")" alt="Foto de perfil del usuario @Context.Session.GetString("nombreUsuario")">
+                                </section>
                             </li>
                         }
 

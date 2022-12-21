@@ -50,14 +50,29 @@ h1 {
 }
 
 
-
 .nav-sesioniniciada {
-  display:block;
+  display:flex;
+  flex-direction:row;
   padding:0.4rem;
   border-radius:0.3rem;
   margin-right:0 !important;
   background-color:rgb(127, 41, 41);
   color:white;
+}
+
+.nav-sesioniniciada section:first-child {
+  padding-right:0.5rem;
+}
+
+.nav-sesioniniciada #fotoperfil {
+  width:4.22rem;
+}
+
+.nav-sesioniniciada #fotoperfil img {
+  max-width:100%;
+  border-radius:0.3rem;
+  background-color: bisque;
+  padding:0.2rem;
 }
 
 .nav-sesioniniciada a, .nav-sesioniniciada p {
@@ -78,6 +93,7 @@ h1 {
   .nav-item{
     margin-right:0.8rem;
   }
+
 }
 
 .nav-item a:hover {
@@ -99,7 +115,12 @@ h1 {
   .nav-sesioniniciada {
     margin-top:0.5rem;
   }
-
+  .nav-sesioniniciada #fotoperfil {
+    width:12.5%;
+  }
+  .nav-sesioniniciada section:first-child {
+    width:87.5%;
+  }
 }
 
 #alogositio {

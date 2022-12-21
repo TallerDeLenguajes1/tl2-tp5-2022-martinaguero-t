@@ -14,9 +14,9 @@
             <span class="form-control" asp-validation-for="@Model.Username" ></span>
 
             <label asp-for="@Model.Contrasena"> @Html.DisplayNameFor(Model => Model.Contrasena) 
-                @Html.EditorFor(model => model.Contrasena)
+                <input asp-for="@Model.Contrasena">
             </label>
-            <span class="form-control" asp-validation-for="@Model.Contrasena" ></span>
+            <span class="form-control" asp-validation-for="@Model.Contrasena"></span>
 
             <input type="submit" value="Ingresar">
         </form>

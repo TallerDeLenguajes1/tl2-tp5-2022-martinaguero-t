@@ -36,7 +36,7 @@ public class RepositorioUsuarios : IRepositorioUsuarios
             Usuario usuarioBuscado = new Usuario();
             // Notar que si no se encuentra un usuario coincidente, entonces el id se establece en -1.
 
-            string consulta = "SELECT id, usuario, rol FROM Usuario WHERE usuario = @nombreUsuario AND contrasena = @contrasena";
+            string consulta = "SELECT id, usuario, rol, foto_perfil FROM Usuario WHERE usuario = @nombreUsuario AND contrasena = @contrasena";
             // No traigo la contraseña ya que no es necesario.
             
             using (SQLiteConnection conexion = new SQLiteConnection(cadenaConexion))
@@ -56,7 +56,7 @@ public class RepositorioUsuarios : IRepositorioUsuarios
                     while (reader.Read())
                     {
                         // Se supone que no habrán dos usuarios con el mismo userame, así que esta consulta siempre debe devolver un registro.
-                        usuarioBuscado = new Usuario(reader.GetInt32(0),reader[1].ToString(),reader[2].ToString());
+                        usuarioBuscado = new Usuario(reader.GetInt32(0),reader["usuario"].ToString(),reader["rol"].ToString(),reader["foto_perfil"].ToString());
                     }
 
                 }

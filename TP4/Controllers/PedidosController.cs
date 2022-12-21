@@ -169,7 +169,6 @@ namespace TP4.Controllers
                 if(rolUsuario == null) return RedirectToAction("Index","Home");
 
                 var pedidos = _repPedidos.obtenerPedidosCliente(idCliente);
-
                 
                 var pedidosViewModel = _mapper.Map<List<PedidoViewModel>>(pedidos);
 

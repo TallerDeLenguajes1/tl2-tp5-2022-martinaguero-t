@@ -41,13 +41,18 @@ public class LogueoController : Controller
         {
             if(ModelState.IsValid){
                 Usuario usuario = _repUsuarios.buscarUsuario(loginUsuarioViewModel.Username,loginUsuarioViewModel.Contrasena);
-
+                
+                
                 if(usuario.Id != -1){
                     HttpContext.Session.SetString("nombreUsuario",usuario.Username);
                     HttpContext.Session.SetString("rolUsuario",usuario.Rol);
-
+                    if(String.IsNullOrEmpty(usuario.Fotoperfil)){
+                        HttpContext.Session.SetString("fotoPerfilUsuario","default.png");
+                    } else {
+                        HttpContext.Session.SetString("fotoPerfilUsuario",usuario.Fotoperfil);
+                    }
+                    // Correspondería un chequeo de que la imagen con dicho nombre exista (en caso contrario mostrar la imagen por defecto) pero File.Exists no funciona bien 
                     _logger.LogInformation($"El usuario de ID {usuario.Id} y username {usuario.Username} ha iniciado sesión.");
-
                     return RedirectToAction("Index","Home");
                 } else {
                     ViewBag.NoEncontrado = "No se encontró el usuario ingresado";
