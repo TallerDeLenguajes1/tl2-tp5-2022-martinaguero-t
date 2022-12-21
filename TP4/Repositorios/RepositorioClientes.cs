@@ -53,7 +53,7 @@ public class RepositorioClientes : IRepositorioClientes
 
                     while (reader.Read())
                     {
-                        clientes.Add(new Cliente(reader.GetInt32(0),reader[1].ToString(),reader[2].ToString(),reader[3].ToString(),reader[4].ToString()));
+                        clientes.Add(new Cliente(reader.GetInt32(0),reader["nombre"].ToString(),reader["direccion"].ToString(),reader["telefono"].ToString(),reader["referencia_direccion"].ToString()));
                     }
 
                 }
@@ -99,7 +99,7 @@ public class RepositorioClientes : IRepositorioClientes
 
                     while (reader.Read())
                     {
-                        clienteBuscado = new Cliente(reader.GetInt32(0),reader[1].ToString(),reader[2].ToString(),reader[3].ToString(),reader[4].ToString());
+                        clienteBuscado = new Cliente(reader.GetInt32(0),reader["nombre"].ToString(),reader["direccion"].ToString(),reader["telefono"].ToString(),reader["referencia_direccion"].ToString());
                     }
 
                 }

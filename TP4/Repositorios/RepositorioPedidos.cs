@@ -57,7 +57,7 @@ public class RepositorioPedidos : IRepositorioPedidos
                     while (reader.Read())
                     {
                         pedidos.Add(
-                        new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4), reader[5].ToString(),reader[6].ToString()));
+                        new Pedido(reader.GetInt32(0), reader["observaciones"].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4), reader[5].ToString(),reader[6].ToString()));
                     }
 
                 }
@@ -103,7 +103,7 @@ public class RepositorioPedidos : IRepositorioPedidos
 
                     while (reader.Read())
                     {
-                        pedidoBuscado = new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4));
+                        pedidoBuscado = new Pedido(reader.GetInt32(0), reader["observaciones"].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4));
                     }
 
                 }
@@ -150,7 +150,7 @@ public class RepositorioPedidos : IRepositorioPedidos
                     while (reader.Read())
                     {
                         pedidos.Add(
-                        new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4), reader[5].ToString(), reader[6].ToString()));
+                        new Pedido(reader.GetInt32(0), reader["observaciones"].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4), reader[5].ToString(), reader[6].ToString()));
                     }
 
                 }
@@ -197,7 +197,7 @@ public class RepositorioPedidos : IRepositorioPedidos
                     while (reader.Read())
                     {
                         pedidos.Add(
-                        new Pedido(reader.GetInt32(0), reader[1].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4), reader[5].ToString(), reader[6].ToString())
+                        new Pedido(reader.GetInt32(0), reader["observaciones"].ToString(), reader.GetBoolean(2), reader.GetInt32(3), reader.GetInt32(4), reader[5].ToString(), reader[6].ToString())
                         );
                     }
 

@@ -51,7 +51,7 @@ public class RepositorioCadetes : IRepositorioCadetes
 
                     while (reader.Read())
                     {
-                        cadetes.Add(new Cadete(reader.GetInt32(0), reader[1].ToString(), reader[2].ToString(), reader[3].ToString()));
+                        cadetes.Add(new Cadete(reader.GetInt32(0), reader["nombre"].ToString(), reader["direccion"].ToString(), reader["telefono"].ToString()));
                     }
 
                 }
@@ -97,7 +97,7 @@ public class RepositorioCadetes : IRepositorioCadetes
 
                     while (reader.Read())
                     {
-                        cadeteBuscado = new Cadete(reader.GetInt32(0), reader[1].ToString(), reader[2].ToString(), reader[3].ToString());
+                        cadeteBuscado = new Cadete(reader.GetInt32(0), reader["nombre"].ToString(), reader["direccion"].ToString(), reader["telefono"].ToString());
                     }
 
                 }
